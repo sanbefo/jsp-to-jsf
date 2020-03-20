@@ -19,8 +19,17 @@ public class JSPtoJSF {
 		String name = f.getName().substring(0, i);
 		return new File(name + newExtension);
 	}
+//	Reader dictionary, File input, File output
 
-//	public void replaceLine(JSONObject json, Reader dictionary, File input, File output) {}
+	public static void replaceLine(String line, JSONObject json, BufferedWriter writer) throws IOException {
+		String original = line;
+		line = line.replace("<", "").replace(">", "").trim();
+	    System.out.print(line);
+	    String inJson = (String) json.get(line);
+		String toWrite = inJson != null ? original.replace(line, inJson) : original;
+		writer.write(toWrite + "\n");
+	    System.out.println(line);
+	}
 
     public static void main(String[] args) throws IOException, ParseException {
         JSONParser parser = new JSONParser();
@@ -35,14 +44,7 @@ public class JSPtoJSF {
 			BufferedReader reader = new BufferedReader(new FileReader(fileInput));
 			String line;
 			while ((line = reader.readLine()) != null) {
-				String original = line;
-				line = line.replace("<", "").replace(">", "").trim();
-				String s = (String) jsonObject.get((Object) line);
-			    System.out.print(line);
-			    String inJson = (String) jsonObject.get(line);
-				String toWrite = inJson != null ? original.replace(line, inJson) : original;
-				writer.write(toWrite + "\n");
-			    System.out.println(line);
+				replaceLine(line, jsonObject, writer);
 			}
 			reader.close();
 			writer.close();
