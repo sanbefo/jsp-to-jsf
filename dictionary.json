@@ -1,0 +1,6 @@
+{
+    "head": "h:head",
+    "/head": "/h:head",
+    "body": "/h:body",
+    "/body": "/h:body"
+}
