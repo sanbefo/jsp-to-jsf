@@ -2,5 +2,14 @@
     "head": "h:head",
     "/head": "/h:head",
     "body": "/h:body",
-    "/body": "/h:body"
+    "/body": "/h:body",
+    "textarea": "h:inputTextarea",
+    "/textarea": "/h:inputTextarea",
+    "img": "h:graphicImage",
+    "a": "h:commandLink",
+    "select": "h:selectOneMenu",
+    "/select": "/h:selectOneMenu",
+    "option": "f:selectItem",
+    "label": "h:outputText",
+    "/label": "/h:outputText"
 }

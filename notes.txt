@@ -1,0 +1,24 @@
+<select name = "j_idt6:j_idt8">
+	<option value = "1">Item 1</option> 
+	<option value = "2">Item 2</option> 
+</select> 
+
+<h:selectOneMenu value = "#{userData.data}"> 
+   <f:selectItem itemValue = "1" itemLabel = "Item 1" /> 
+   <f:selectItem itemValue = "2" itemLabel = "Item 2" /> 
+</h:selectOneMenu>
+
+=============================================================
+<input type = "submit" name = "j_idt10:j_idt13" value = "Click Me!" 
+   onclick = "alert('Hello World!');" />
+
+<h:commandButton value = "Click Me!" onclick = "alert('Hello World!');" />
+
+<input type="text">	<h:inputText>
+<input type="hidden">	<h:inputHidden>
+<input type="password">	<h:inputSecret>
+<input type="checkbox">	<h:selectBooleanCheckbox>
+<input type="radio">	<h:selectOneRadio>
+<select>	<h:selectOneListbox>
+<select multiple>	<h:selectManyListbox>
+<img>	<h:graphicImage>

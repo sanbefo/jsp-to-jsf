@@ -6,6 +6,8 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Reader;
+import java.util.Arrays;
+import java.util.List;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.*;
@@ -19,16 +21,28 @@ public class JSPtoJSF {
 		String name = f.getName().substring(0, i);
 		return new File(name + newExtension);
 	}
-//	Reader dictionary, File input, File output
 
 	public static void replaceLine(String line, JSONObject json, BufferedWriter writer) throws IOException {
+        String[] stringTags = new String[]{ "input", "a", "img" };
+
+        List<String> tags = Arrays.asList(stringTags);
+
 		String original = line;
 		line = line.replace("<", "").replace(">", "").trim();
-	    System.out.print(line);
-	    String inJson = (String) json.get(line);
-		String toWrite = inJson != null ? original.replace(line, inJson) : original;
+		String tag = line.split(" ")[0];
+		String test = tag;
+//		System.out.println(tag);
+//		if (tag.equals("option")) {
+//		    String inJson = (String) json.get(tag);
+//			System.out.println(inJson);
+//			System.out.println("====================");
+//		}
+//		String test = tags.contains(tag) ? tag : line;
+	    String inJson = (String) json.get(test);
+	    System.out.println(inJson);
+		String toWrite = inJson != null ? original.replaceFirst(test, inJson) : original;
+//		System.out.println(toWrite);
 		writer.write(toWrite + "\n");
-	    System.out.println(line);
 	}
 
     public static void main(String[] args) throws IOException, ParseException {
@@ -51,5 +65,7 @@ public class JSPtoJSF {
         } catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
+		System.out.println("====================");
+        System.out.println("DONE!!!");
     }
 }

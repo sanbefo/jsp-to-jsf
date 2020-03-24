@@ -3,18 +3,24 @@
 		<title>First JSP</title>
 	</h:head>
 	</h:body>
-	  <%
-	    double num = Math.random();
-	    if (num > 0.95) {
-	  %>
-	      <h2>You'll have a luck day!</h2><p>(<%= num %>)</p>
-	  <%
-	    } else {
-	  %>
-	      <h2>Well, life goes on ... </h2><p>(<%= num %>)</p>
-	  <%
-	    }
-	  %>
-	  <a href="<%= request.getRequestURI() %>"><h3>Try Again</h3></a>
+		<%
+			double num = Math.random();
+			if (num > 0.95) {
+		%>
+		<h2>You'll have a luck day!</h2><p>(<%= num %>)</p>
+		<% } else { %>
+		<h2>Well, life goes on ... </h2><p>(<%= num %>)</p>
+		<% } %>
+		<h:graphicImage src = "http://www.tutorialspoint.com/images/jsf-mini-logo.png" />
+		<h:selectOneMenu name = "j_idt6:j_idt8">
+			<f:selectItem value = "1">Item 1</option>
+			<f:selectItem value = "2">Item 2</option>
+		</h:selectOneMenu>
+		<h:outputText for="email">
+			Email address
+		</h:outputText>
+		<h:commandLink href="<%= request.getRequestURI() %>">
+			<h3>Try Again</h3>
+		</a>
 	</h:body>
 </html>
