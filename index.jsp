@@ -3,6 +3,7 @@
 		<title>First JSP</title>
 	</head>
 	<body>
+		<img src = "http://www.tutorialspoint.com/images/jsf-mini-logo.png" />
 		<%
 			double num = Math.random();
 			if (num > 0.95) {
@@ -11,7 +12,6 @@
 		<% } else { %>
 		<h2>Well, life goes on ... </h2><p>(<%= num %>)</p>
 		<% } %>
-		<img src = "http://www.tutorialspoint.com/images/jsf-mini-logo.png" />
 		<select name = "j_idt6:j_idt8">
 			<option value = "1">Item 1</option>
 			<option value = "2">Item 2</option>

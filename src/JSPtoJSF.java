@@ -9,10 +9,14 @@ import java.io.Reader;
 import java.util.Arrays;
 import java.util.List;
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.*;
 
 public class JSPtoJSF {
+	
+	private final static String dictionaryFile = "dictionary.json";
+	private final static String jspFile = "index.jsp";
 
 	public JSPtoJSF() {}
 
@@ -22,39 +26,42 @@ public class JSPtoJSF {
 		return new File(name + newExtension);
 	}
 
-	public static void replaceLine(String line, JSONObject json, BufferedWriter writer) throws IOException {
-        String[] stringTags = new String[]{ "input", "a", "img" };
-
-        List<String> tags = Arrays.asList(stringTags);
+	public static void replaceLine(String line, JSONObject json, BufferedWriter writer) throws IOException, ParseException {
+		//TODO missing 'a' tag
+		String[] stringTags = new String[]{ "input", "img" };
+		List<String> complexTags = Arrays.asList(stringTags);
 
 		String original = line;
 		line = line.replace("<", "").replace(">", "").trim();
 		String tag = line.split(" ")[0];
 		String test = tag;
-//		System.out.println(tag);
-//		if (tag.equals("option")) {
-//		    String inJson = (String) json.get(tag);
-//			System.out.println(inJson);
-//			System.out.println("====================");
-//		}
-//		String test = tags.contains(tag) ? tag : line;
-	    String inJson = (String) json.get(test);
-	    System.out.println(inJson);
-		String toWrite = inJson != null ? original.replaceFirst(test, inJson) : original;
-//		System.out.println(toWrite);
-		writer.write(toWrite + "\n");
+
+		if (complexTags.contains(tag)) {
+			JSONParser parser = new JSONParser();
+			JSONArray inJson = (JSONArray) json.get(tag);
+			JSONObject inArray = (JSONObject) inJson.get(0);
+			String toWrite = original;
+			for (Object key : inArray.keySet()) {
+				toWrite = toWrite.replaceFirst(key.toString(), inArray.get(key).toString());
+			}
+			writer.write(toWrite + "\n");
+		} else {
+			String inJson = (String) json.get(test);
+			System.out.println(inJson);
+			String toWrite = inJson != null ? original.replaceFirst(tag, inJson) : original;
+			writer.write(toWrite + "\n");
+		}
 	}
 
-    public static void main(String[] args) throws IOException, ParseException {
-        JSONParser parser = new JSONParser();
-        try {
-			Reader dictionary = new FileReader("dictionary.json");
+	public static void main(String[] args) throws IOException, ParseException {
+		JSONParser parser = new JSONParser();
+		try {
+			Reader dictionary = new FileReader(dictionaryFile);
 			JSONObject jsonObject = (JSONObject) parser.parse(dictionary);
-			File fileInput = new File("index.jsp");
-	        File fileOutput = new File("test.txt");
-	        FileWriter fr = new FileWriter(fileOutput);
-	        BufferedWriter writer = new BufferedWriter(fr);
-
+			File fileInput = new File(jspFile);
+			File fileOutput = new File("test.txt");
+			FileWriter fr = new FileWriter(fileOutput);
+			BufferedWriter writer = new BufferedWriter(fr);
 			BufferedReader reader = new BufferedReader(new FileReader(fileInput));
 			String line;
 			while ((line = reader.readLine()) != null) {
@@ -62,10 +69,9 @@ public class JSPtoJSF {
 			}
 			reader.close();
 			writer.close();
-        } catch (FileNotFoundException e) {
+		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
-		System.out.println("====================");
-        System.out.println("DONE!!!");
-    }
+		System.out.println("====================DONE!!!====================");
+	}
 }

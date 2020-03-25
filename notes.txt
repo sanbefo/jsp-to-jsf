@@ -21,4 +21,3 @@
 <input type="radio">	<h:selectOneRadio>
 <select>	<h:selectOneListbox>
 <select multiple>	<h:selectManyListbox>
-<img>	<h:graphicImage>
