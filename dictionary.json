@@ -1,13 +1,22 @@
 {
 	"head": "h:head",
 	"/head": "/h:head",
-	"body": "/h:body",
+	"body": "h:body",
 	"/body": "/h:body",
 	"textarea": "h:inputTextarea",
 	"/textarea": "/h:inputTextarea",
 	"img": [{
 		"img": "h:graphicImage",
 		"src": "value"
+	}],
+	"input": [{
+		"type": [{
+			"hidden": "h:inputHidden",
+			"checkbox": "h:selectBooleanCheckbox",
+			"password": "h:inputSecret",
+			"radio": "h:selectOneRadio",
+			"text": "h:inputText"
+		}]
 	}],
 	"a": "h:commandLink",
 	"select": "h:selectOneMenu",

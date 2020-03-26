@@ -9,15 +9,15 @@
 </h:selectOneMenu>
 
 =============================================================
-<input type = "submit" name = "j_idt10:j_idt13" value = "Click Me!" 
-   onclick = "alert('Hello World!');" />
+<input type="checkbox"> <h:selectBooleanCheckbox>
+<input type="radio"> <h:selectOneRadio>
+
+<input type="button">
+<input type="date">
+<input type="number">
+<input type="search">
+<input type="submit">
 
 <h:commandButton value = "Click Me!" onclick = "alert('Hello World!');" />
 
-<input type="text">	<h:inputText>
-<input type="hidden">	<h:inputHidden>
-<input type="password">	<h:inputSecret>
-<input type="checkbox">	<h:selectBooleanCheckbox>
-<input type="radio">	<h:selectOneRadio>
-<select>	<h:selectOneListbox>
 <select multiple>	<h:selectManyListbox>

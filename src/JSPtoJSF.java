@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.io.Reader;
 import java.util.Arrays;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -17,6 +19,8 @@ public class JSPtoJSF {
 	
 	private final static String dictionaryFile = "dictionary.json";
 	private final static String jspFile = "index.jsp";
+	private final static String INPUT_TAG = "input";
+	private final static String IMG_TAG = "img";
 
 	public JSPtoJSF() {}
 
@@ -28,26 +32,47 @@ public class JSPtoJSF {
 
 	public static void replaceLine(String line, JSONObject json, BufferedWriter writer) throws IOException, ParseException {
 		//TODO missing 'a' tag
-		String[] stringTags = new String[]{ "input", "img" };
+		//TODO missing 'select-option' tag
+		String[] stringTags = new String[]{ "img", "input" };
 		List<String> complexTags = Arrays.asList(stringTags);
 
 		String original = line;
 		line = line.replace("<", "").replace(">", "").trim();
 		String tag = line.split(" ")[0];
-		String test = tag;
 
 		if (complexTags.contains(tag)) {
-			JSONParser parser = new JSONParser();
 			JSONArray inJson = (JSONArray) json.get(tag);
 			JSONObject inArray = (JSONObject) inJson.get(0);
-			String toWrite = original;
-			for (Object key : inArray.keySet()) {
-				toWrite = toWrite.replaceFirst(key.toString(), inArray.get(key).toString());
+			String toWrite = original;			
+			switch(tag) {
+				case INPUT_TAG:
+					Pattern pattern = Pattern.compile("type=*\"(.*?)\"");
+					Matcher matcher = pattern.matcher(line);
+					System.out.println(line);
+					if (matcher.find())
+					{
+						String toRemove = matcher.group(0);
+						String inputType = matcher.group(1);
+						toWrite = original.replace(toRemove + " ", "");
+						JSONArray array = (JSONArray) inArray.get("type");
+						JSONObject types = (JSONObject) array.get(0);
+						String type = (String) types.get(inputType);
+						inputType = (String) inArray.get(inputType);
+						System.out.println(inputType);
+						toWrite = toWrite.replaceFirst(tag, type);
+					}
+					break;
+				case IMG_TAG:
+					for (Object key : inArray.keySet()) {
+						toWrite = toWrite.replaceFirst(key.toString(), inArray.get(key).toString());
+					}
+					break;
 			}
+			
 			writer.write(toWrite + "\n");
 		} else {
-			String inJson = (String) json.get(test);
-			System.out.println(inJson);
+			String inJson = (String) json.get(tag);
+			if (inJson != null) System.out.println(inJson);
 			String toWrite = inJson != null ? original.replaceFirst(tag, inJson) : original;
 			writer.write(toWrite + "\n");
 		}
@@ -72,6 +97,6 @@ public class JSPtoJSF {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
-		System.out.println("====================DONE!!!====================");
+		System.out.println("\n====================DONE!!!====================");
 	}
 }
