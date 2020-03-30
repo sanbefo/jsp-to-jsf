@@ -17,10 +17,11 @@ import org.jsoup.nodes.Document;
 
 public class JSPtoJSF {
 	
-	private final static String dictionaryFile = "dictionary.json";
-	private final static String jspFile = "index.jsp";
-	private final static String INPUT_TAG = "input";
 	private final static String IMG_TAG = "img";
+	private final static String INPUT_TAG = "input";
+	private final static String OPTION_TAG = "option";
+	private final static String jspFile = "index.jsp";
+	private final static String dictionaryFile = "dictionary.json";
 
 	public JSPtoJSF() {}
 
@@ -32,27 +33,29 @@ public class JSPtoJSF {
 
 	public static void replaceLine(String line, JSONObject json, BufferedWriter writer) throws IOException, ParseException {
 		//TODO missing 'a' tag
-		//TODO missing 'select-option' tag
-		String[] stringTags = new String[]{ "img", "input" };
+		String[] stringTags = new String[]{ "img", "input", "option" };
 		List<String> complexTags = Arrays.asList(stringTags);
 
 		String original = line;
 		line = line.replace("<", "").replace(">", "").trim();
 		String tag = line.split(" ")[0];
 		String toWrite = original;
-
 		if (complexTags.contains(tag)) {
 			JSONArray inJson = (JSONArray) json.get(tag);
 			JSONObject inArray = (JSONObject) inJson.get(0);
-			if (tag.equals(INPUT_TAG)) {
-				toWrite = InputTransformation.transform(original, json, tag, inJson, inArray);
-			}
-			if (tag.equals(IMG_TAG)) {
-				toWrite = ImageTransformation.transform(original, json, tag, inJson, inArray);
+			switch(tag) {
+				case INPUT_TAG:
+					toWrite = InputTransformation.transform(original, json, tag, inJson, inArray);
+					break;
+				case IMG_TAG:
+					toWrite = ImageTransformation.transform(original, json, tag, inJson, inArray);
+					break;
+				case OPTION_TAG:
+					toWrite = OptionTransformation.transform(original, json, tag, inJson, inArray);
+					break;
 			}
 		} else {
 			String inJson = (String) json.get(tag);
-			if (inJson != null) System.out.println(inJson);
 			toWrite = inJson != null ? original.replaceFirst(tag, inJson) : original;
 		}
 		writer.write(toWrite + "\n");
@@ -67,9 +70,9 @@ public class JSPtoJSF {
 			Reader dictionary = new FileReader(dictionaryFile);
 			JSONObject jsonObject = (JSONObject) parser.parse(dictionary);
 			File fileInput = new File(jspFile);
-			Document doc = Jsoup.parse(fileInput, null);
-			System.out.println(doc.getElementsByTag("input"));
-			System.out.println("-----------------------------");
+//			Document doc = Jsoup.parse(fileInput, null);
+//			System.out.println(doc.getElementsByTag("input"));
+//			System.out.println("-----------------------------");
 //			if (0 == 1) {
 				File fileOutput = new File("test.txt");
 				FileWriter fr = new FileWriter(fileOutput);

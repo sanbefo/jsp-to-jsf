@@ -11,7 +11,6 @@ public class InputTransformation {
 		String toWrite = original;
 		Pattern pattern = Pattern.compile("type=*\"(.*?)\"");
 		Matcher matcher = pattern.matcher(line);
-		System.out.println(line);
 		if (matcher.find())
 		{
 			String toRemove = matcher.group(0);

@@ -16,8 +16,8 @@
 		<h2>Well, life goes on ... </h2><p>(<%= num %>)</p>
 		<% } %>
 		<h:selectOneMenu name="j_idt6:j_idt8">
-			<f:selectItem value="1">Item 1</option>
-			<f:selectItem value="2">Item 2</option>
+			<f:selectItem itemValue="1" itemLabel = "Item 1"/>
+			<f:selectItem itemValue="2" itemLabel = "Item 2"/>
 		</h:selectOneMenu>
 		<h:outputText for="email">
 			Email address
