@@ -8,12 +8,12 @@ import java.io.IOException;
 import java.io.Reader;
 import java.util.Arrays;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.*;
+import org.jsoup.*;
+import org.jsoup.nodes.Document;
 
 public class JSPtoJSF {
 	
@@ -39,64 +39,54 @@ public class JSPtoJSF {
 		String original = line;
 		line = line.replace("<", "").replace(">", "").trim();
 		String tag = line.split(" ")[0];
+		String toWrite = original;
 
 		if (complexTags.contains(tag)) {
 			JSONArray inJson = (JSONArray) json.get(tag);
 			JSONObject inArray = (JSONObject) inJson.get(0);
-			String toWrite = original;			
-			switch(tag) {
-				case INPUT_TAG:
-					Pattern pattern = Pattern.compile("type=*\"(.*?)\"");
-					Matcher matcher = pattern.matcher(line);
-					System.out.println(line);
-					if (matcher.find())
-					{
-						String toRemove = matcher.group(0);
-						String inputType = matcher.group(1);
-						toWrite = original.replace(toRemove + " ", "");
-						JSONArray array = (JSONArray) inArray.get("type");
-						JSONObject types = (JSONObject) array.get(0);
-						String type = (String) types.get(inputType);
-						inputType = (String) inArray.get(inputType);
-						System.out.println(inputType);
-						toWrite = toWrite.replaceFirst(tag, type);
-					}
-					break;
-				case IMG_TAG:
-					for (Object key : inArray.keySet()) {
-						toWrite = toWrite.replaceFirst(key.toString(), inArray.get(key).toString());
-					}
-					break;
+			if (tag.equals(INPUT_TAG)) {
+				toWrite = InputTransformation.transform(original, json, tag, inJson, inArray);
 			}
-			
-			writer.write(toWrite + "\n");
+			if (tag.equals(IMG_TAG)) {
+				toWrite = ImageTransformation.transform(original, json, tag, inJson, inArray);
+			}
 		} else {
 			String inJson = (String) json.get(tag);
 			if (inJson != null) System.out.println(inJson);
-			String toWrite = inJson != null ? original.replaceFirst(tag, inJson) : original;
-			writer.write(toWrite + "\n");
+			toWrite = inJson != null ? original.replaceFirst(tag, inJson) : original;
 		}
+		writer.write(toWrite + "\n");
 	}
 
 	public static void main(String[] args) throws IOException, ParseException {
+		System.out.println("===============================================");
+		System.out.println("||                  START!!!                 ||");
+		System.out.println("===============================================");
 		JSONParser parser = new JSONParser();
 		try {
 			Reader dictionary = new FileReader(dictionaryFile);
 			JSONObject jsonObject = (JSONObject) parser.parse(dictionary);
 			File fileInput = new File(jspFile);
-			File fileOutput = new File("test.txt");
-			FileWriter fr = new FileWriter(fileOutput);
-			BufferedWriter writer = new BufferedWriter(fr);
-			BufferedReader reader = new BufferedReader(new FileReader(fileInput));
-			String line;
-			while ((line = reader.readLine()) != null) {
-				replaceLine(line, jsonObject, writer);
-			}
-			reader.close();
-			writer.close();
+			Document doc = Jsoup.parse(fileInput, null);
+			System.out.println(doc.getElementsByTag("input"));
+			System.out.println("-----------------------------");
+//			if (0 == 1) {
+				File fileOutput = new File("test.txt");
+				FileWriter fr = new FileWriter(fileOutput);
+				BufferedWriter writer = new BufferedWriter(fr);
+				BufferedReader reader = new BufferedReader(new FileReader(fileInput));
+				String line;
+				while ((line = reader.readLine()) != null) {
+					replaceLine(line, jsonObject, writer);
+				}
+				reader.close();
+				writer.close();
+//			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
-		System.out.println("\n====================DONE!!!====================");
+		System.out.println("===============================================");
+		System.out.println("||                  DONE!!!                  ||");
+		System.out.println("===============================================");
 	}
 }
