@@ -1,6 +1,3 @@
-<h:outputLink value="http://blog.mueller-bruehl.de">
-	Michael's Blog
-</h:outputLink>
 =============================================================
 <input type="checkbox"> <h:selectBooleanCheckbox>
 <input type="radio"> <h:selectOneRadio>
@@ -11,11 +8,4 @@
 <input type="search">
 <input type="submit">
 
-<h:commandButton value = "Click Me!" onclick = "alert('Hello World!');" />
-
 <select multiple>	<h:selectManyListbox>
-
-
-
-
-

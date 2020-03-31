@@ -5,6 +5,9 @@
 	"/body": "/h:body",
 	"textarea": "h:inputTextarea",
 	"/textarea": "/h:inputTextarea",
+	"button": [{
+		"button": "h:commandButton"
+	}],
 	"img": [{
 		"img": "h:graphicImage",
 		"src": "value"

@@ -7,6 +7,7 @@
 		<input type="text" id="username" name="username">
 		<input type="password" id="pass" name="password" minlength="8" required>
 		<img src="http://www.tutorialspoint.com/images/jsf-mini-logo.png" />
+		<button type="button">Click Me!</button>
 		<%
 			double num = Math.random();
 			if (num > 0.95) {

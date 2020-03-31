@@ -7,6 +7,7 @@
 		<h:inputText id="username" name="username">
 		<h:inputSecret id="pass" name="password" minlength="8" required>
 		<h:graphicImage value="http://www.tutorialspoint.com/images/jsf-mini-logo.png" />
+		<h:commandButton value="Click Me!" />
 		<%
 			double num = Math.random();
 			if (num > 0.95) {
