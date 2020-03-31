@@ -1,13 +1,6 @@
-<select name = "j_idt6:j_idt8">
-	<option value = "1">Item 1</option> 
-	<option value = "2">Item 2</option> 
-</select> 
-
-<h:selectOneMenu value = "#{userData.data}"> 
-   <f:selectItem itemValue = "1" itemLabel = "Item 1" /> 
-   <f:selectItem itemValue = "2" itemLabel = "Item 2" /> 
-</h:selectOneMenu>
-
+<h:outputLink value="http://blog.mueller-bruehl.de">
+	Michael's Blog
+</h:outputLink>
 =============================================================
 <input type="checkbox"> <h:selectBooleanCheckbox>
 <input type="radio"> <h:selectOneRadio>

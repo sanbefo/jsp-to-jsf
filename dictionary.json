@@ -18,7 +18,11 @@
 			"text": "h:inputText"
 		}]
 	}],
-	"a": "h:commandLink",
+	"a": [{
+		"a": "h:outputLink",
+		"href": "value"
+	}],
+	"/a": "/h:outputLink",
 	"select": "h:selectOneMenu",
 	"/select": "/h:selectOneMenu",
 	"option": [{

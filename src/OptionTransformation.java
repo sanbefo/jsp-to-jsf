@@ -6,7 +6,6 @@ import org.jsoup.nodes.Document;
 public class OptionTransformation {
 
 	public static String transform(String original, JSONObject json, String tag, JSONArray inJson, JSONObject inArray) {
-		System.out.println(original);
 		String value = (String) inArray.get("value");
 		String option = (String) inArray.get("option");
 //		System.out.println("------------------------");

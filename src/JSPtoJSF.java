@@ -16,7 +16,8 @@ import org.jsoup.*;
 import org.jsoup.nodes.Document;
 
 public class JSPtoJSF {
-	
+
+	private final static String A_TAG = "a";
 	private final static String IMG_TAG = "img";
 	private final static String INPUT_TAG = "input";
 	private final static String OPTION_TAG = "option";
@@ -31,9 +32,22 @@ public class JSPtoJSF {
 		return new File(name + newExtension);
 	}
 
+	public static String switchTag(String original, JSONObject json, String tag, JSONArray inJson, JSONObject inArray) {
+		switch(tag) {
+			case INPUT_TAG:
+				return InputTransformation.transform(original, json, tag, inJson, inArray);
+			case IMG_TAG:
+				return ImageTransformation.transform(original, json, tag, inJson, inArray);
+			case OPTION_TAG:
+				return OptionTransformation.transform(original, json, tag, inJson, inArray);
+			case A_TAG:
+				return ATransformation.transform(original, json, tag, inJson, inArray);
+		}
+		return "";
+	}
+
 	public static void replaceLine(String line, JSONObject json, BufferedWriter writer) throws IOException, ParseException {
-		//TODO missing 'a' tag
-		String[] stringTags = new String[]{ "img", "input", "option" };
+		String[] stringTags = new String[]{ "img", "input", "option", "a" };
 		List<String> complexTags = Arrays.asList(stringTags);
 
 		String original = line;
@@ -43,17 +57,7 @@ public class JSPtoJSF {
 		if (complexTags.contains(tag)) {
 			JSONArray inJson = (JSONArray) json.get(tag);
 			JSONObject inArray = (JSONObject) inJson.get(0);
-			switch(tag) {
-				case INPUT_TAG:
-					toWrite = InputTransformation.transform(original, json, tag, inJson, inArray);
-					break;
-				case IMG_TAG:
-					toWrite = ImageTransformation.transform(original, json, tag, inJson, inArray);
-					break;
-				case OPTION_TAG:
-					toWrite = OptionTransformation.transform(original, json, tag, inJson, inArray);
-					break;
-			}
+			toWrite = switchTag(original, json, tag, inJson, inArray);
 		} else {
 			String inJson = (String) json.get(tag);
 			toWrite = inJson != null ? original.replaceFirst(tag, inJson) : original;

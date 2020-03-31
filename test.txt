@@ -22,8 +22,8 @@
 		<h:outputText for="email">
 			Email address
 		</h:outputText>
-		<h:commandLink href="<%= request.getRequestURI() %>">
+		<h:outputLink value="<%= request.getRequestURI() %>">
 			<h3>Try Again</h3>
-		</a>
+		</h:outputLink>
 	</h:body>
 </html>
