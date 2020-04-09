@@ -1,9 +1,16 @@
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html">
+ <head></head>
+ <body></body>
+</html>
 	<h:head>
 		<title>First JSP</title>
 	</h:head>
 	<h:body>
-		<h:inputHidden id="custId" name="custId" value="3487">
+		<input
+			type="hidden"
+			id="custId"
+			name="custId"
+			value="3487">
 		<h:inputText id="username" name="username">
 		<h:inputSecret id="pass" name="password" minlength="8" required>
 		<h:graphicImage value="http://www.tutorialspoint.com/images/jsf-mini-logo.png" />

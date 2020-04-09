@@ -5,6 +5,5 @@
 	<classpathentry exported="true" kind="lib" path="C:/Users/Personal/Documents/Java Libraries/json.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Personal/Documents/Java Libraries/json-simple.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Personal/Documents/Java Libraries/jsoup-1.13.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Personal/Documents/Java Libraries/jtidy-r938.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -1,4 +1,8 @@
 {
+	"html": [{
+		"xmlns": "http://www.w3.org/1999/xhtml",
+		"xmlns:h": "http://xmlns.jcp.org/jsf/html"
+	}],
 	"head": "h:head",
 	"/head": "/h:head",
 	"body": "h:body",
@@ -33,5 +37,7 @@
 		"value": "itemValue"
 	}],
 	"label": "h:outputText",
-	"/label": "/h:outputText"
+	"/label": "/h:outputText",
+	"form": "h:form",
+	"/form": "/h:form"
 }

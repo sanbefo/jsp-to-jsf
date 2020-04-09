@@ -19,12 +19,13 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.*;
 import org.jsoup.*;
 import org.jsoup.nodes.Document;
-import org.w3c.tidy.Tidy;
+import org.jsoup.select.Elements;
 
 public class JSPtoJSF {
 
 	private final static String A_TAG = "a";
 	private final static String IMG_TAG = "img";
+	private final static String HTML_TAG = "html";
 	private final static String INPUT_TAG = "input";
 	private final static String BUTTON_TAG = "button";
 	private final static String OPTION_TAG = "option";
@@ -42,17 +43,17 @@ public class JSPtoJSF {
 	public static String switchTag(String original, JSONObject json, String tag, JSONArray inJson, JSONObject inArray) {
 		String result = "";
 		switch(tag) {
-			case INPUT_TAG:
-				result = InputTransformation.transform(original, json, tag, inJson, inArray);
+			case A_TAG:
+				result = ATransformation.transform(original, json, tag, inJson, inArray);
 				break;
 			case IMG_TAG:
 				result = ImageTransformation.transform(original, json, tag, inJson, inArray);
 				break;
+			case INPUT_TAG:
+				result = InputTransformation.transform(original, json, tag, inJson, inArray);
+				break;
 			case OPTION_TAG:
 				result = OptionTransformation.transform(original, json, tag, inJson, inArray);
-				break;
-			case A_TAG:
-				result = ATransformation.transform(original, json, tag, inJson, inArray);
 				break;
 			case BUTTON_TAG:
 				result = ButtonTransformation.transform(original, json, tag, inJson, inArray);
@@ -62,10 +63,9 @@ public class JSPtoJSF {
 	}
 
 	public static void replaceLine(String line, JSONObject json, BufferedWriter writer) throws IOException, ParseException {
-		//TODO button tag missing
-		//TODO form tag missing
 		//TODO table tag missing
-		String[] stringTags = new String[]{ "img", "input", "option", "a", "button" };
+		//TODO include DOCTYPE in file if not included <!DOCTYPE html>
+		String[] stringTags = new String[]{ "img", "input", "option", "a", "button", "html" };
 		List<String> complexTags = Arrays.asList(stringTags);
 
 		String original = line;
@@ -83,67 +83,6 @@ public class JSPtoJSF {
 		writer.write(toWrite + "\n");
 	}
 
-//	public static String cleanData(String data) throws UnsupportedEncodingException {
-////	    Tidy tidy = new Tidy();
-////	    tidy.setInputEncoding("UTF-8");
-////	    tidy.setOutputEncoding("UTF-8");
-////	    tidy.setWraplen(Integer.MAX_VALUE);
-////	    tidy.setPrintBodyOnly(true);
-////	    tidy.setXmlOut(true);
-////	    tidy.setSmartIndent(true);
-////	    ByteArrayInputStream inputStream = new ByteArrayInputStream(data.getBytes("UTF-8"));
-////	    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-////	    tidy.parseDOM(inputStream, outputStream);
-////	    return outputStream.toString("UTF-8");
-//
-////		BufferedReader br = new BufferedReader(new StringReader(str));
-//		StringWriter sw = new StringWriter();
-//
-//		Tidy t = new Tidy();
-//		t.setDropEmptyParas(true);
-//		t.setShowWarnings(false); //to hide errors
-//		t.setQuiet(true); //to hide warning
-//		t.setUpperCaseAttrs(false);
-//		t.setUpperCaseTags(false);
-////		t.parse(br,sw);
-//		StringBuffer sb = sw.getBuffer();
-//		String strClean = sb.toString();
-////		br.close();
-////		sw.close();
-//
-//		//do another round of tidyness
-////		br = new BufferedReader(new StringReader(strClean));
-//		sw = new StringWriter();
-//
-//		t = new Tidy();
-//		t.setXmlTags(true);
-////		t.parse(br,sw);
-//		sb = sw.getBuffer();
-//		String strClean2 = sb.toString();
-////		br.close();
-////		sw.close();
-//	}
-
-	public static Document getHtmlDocument() {
-		StringBuilder sb = new StringBuilder();
-		sb.append("<html>");
-		sb.append("<head><style language='text/css'>");
-		sb.append("@page{ margin: 0; }");
-		sb.append("body{ margin:0;}");
-		sb.append("</style></head>");
-		sb.append("<body>");
-		sb.append("<h1>HELLO WORLD</h1>");
-		sb.append("</body>");
-		sb.append("</html>");
-		
-		Tidy tidy = new Tidy();
-		tidy.setXHTML(true);
-		tidy.setQuiet(true);
-		tidy.setShowWarnings(false);
-		
-		return (Document) tidy.parseDOM(new ByteArrayInputStream(sb.toString().getBytes()), null);
-	}
-
 	public static void message(String message) {
 		System.out.println("===============================================");
 		System.out.println("||                 " + message + "                  ||");
@@ -152,24 +91,46 @@ public class JSPtoJSF {
 
 	public static void main(String[] args) throws IOException, ParseException {
 		message("START!!!");
-//		System.out.println(getHtmlDocument().toString());
 		JSONParser parser = new JSONParser();
 		try {
 			Reader dictionary = new FileReader(dictionaryFile);
 			JSONObject jsonObject = (JSONObject) parser.parse(dictionary);
 			File fileInput = new File(jspFile);
-//			System.out.println(fileInput.toString());
-//			System.out.println(cleanData(fileInput.toString()));
-			File fileOutput = new File("test.txt");
-			FileWriter fr = new FileWriter(fileOutput);
-			BufferedWriter writer = new BufferedWriter(fr);
-			BufferedReader reader = new BufferedReader(new FileReader(fileInput));
-			String line;
-			while ((line = reader.readLine()) != null) {
-				replaceLine(line, jsonObject, writer);
+			BufferedReader br = new BufferedReader(new FileReader(fileInput));
+			String fileLine;
+			String dom = "";
+			while ((fileLine = br.readLine()) != null) {
+				dom += fileLine + "\n";
 			}
-			reader.close();
-			writer.close();
+			Document doc = Jsoup.parse(dom);
+			Elements html = doc.getElementsByTag("html");
+			String res = HTMLTransformation.transformJSOUP(doc, jsonObject, dom, html);
+			res = OptionTransformation.transformJSOUP(doc, jsonObject, res, html);
+			res = ImageTransformation.transformJSOUP(doc, jsonObject, res, html);
+			res = ButtonTransformation.transformJSOUP(doc, jsonObject, res, html);
+			res = InputTransformation.transformJSOUP(doc, jsonObject, res, html);
+			res = ATransformation.transformJSOUP(doc, jsonObject, res, html);
+			System.out.println(res);
+
+//			String xmlns = (String) inArray.get("xmlns");
+//			String xmlnsh = (String) inArray.get("xmlns:h");
+//			Document doc = Jsoup.parse(original);
+//			Elements html = doc.getElementsByTag(tag);
+//			html.attr("xmlns", "asd").attr("xmlns:h", "asdf");
+
+//			System.out.println(html);
+			if (1 == 0) {
+				File fileOutput = new File("test.txt");
+				FileWriter fr = new FileWriter(fileOutput);
+				BufferedWriter writer = new BufferedWriter(fr);
+				BufferedReader reader = new BufferedReader(new FileReader(fileInput));
+				String line;
+				while ((line = reader.readLine()) != null) {
+					replaceLine(line, jsonObject, writer);
+				}
+				reader.close();
+				writer.close();
+			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
