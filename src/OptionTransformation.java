@@ -32,7 +32,8 @@ public class OptionTransformation {
 			token.removeAttr("value");
 			token.attr("itemLabel", token.text());
 			token.text("");
-			String jsfTag = token.toString().replaceFirst(OPTION_TAG, option).replace("</option>", "\n").replace(">", "/>");
+			String jsfTag = "\n";
+			jsfTag += token.toString().replaceFirst(OPTION_TAG, option).replace("</option>", "\n").replace(">", "/>");
 			dom = dom.replace(original, jsfTag);
 		}
 		return dom;

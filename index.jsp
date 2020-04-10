@@ -7,6 +7,10 @@
 			<option value="1">Item 1</option>
 			<option value="2">Item 2</option>
 		</select>
+		<select name="j_idt6:j_idt8">
+			<option value="3">Item 3</option>
+			<option value="4">Item 4</option>
+		</select>
 		<input
 			type="hidden"
 			id="custId"

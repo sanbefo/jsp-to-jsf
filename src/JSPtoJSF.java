@@ -25,7 +25,6 @@ public class JSPtoJSF {
 
 	private final static String A_TAG = "a";
 	private final static String IMG_TAG = "img";
-	private final static String HTML_TAG = "html";
 	private final static String INPUT_TAG = "input";
 	private final static String BUTTON_TAG = "button";
 	private final static String OPTION_TAG = "option";
@@ -64,7 +63,6 @@ public class JSPtoJSF {
 
 	public static void replaceLine(String line, JSONObject json, BufferedWriter writer) throws IOException, ParseException {
 		//TODO table tag missing
-		//TODO include DOCTYPE in file if not included <!DOCTYPE html>
 		String[] stringTags = new String[]{ "img", "input", "option", "a", "button", "html" };
 		List<String> complexTags = Arrays.asList(stringTags);
 
@@ -105,6 +103,7 @@ public class JSPtoJSF {
 			Document doc = Jsoup.parse(dom);
 			Elements html = doc.getElementsByTag("html");
 			String res = HTMLTransformation.transformJSOUP(doc, jsonObject, dom, html);
+			res = SelectTransformation.transformJSOUP(doc, jsonObject, res, html);
 			res = OptionTransformation.transformJSOUP(doc, jsonObject, res, html);
 			res = ImageTransformation.transformJSOUP(doc, jsonObject, res, html);
 			res = ButtonTransformation.transformJSOUP(doc, jsonObject, res, html);
