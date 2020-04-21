@@ -7,7 +7,7 @@ public class HTMLTransformation {
 
 	private final static String HTML_TAG = "html";
 
-	public static String transformJSOUP(Document document, JSONObject json, String dom, Elements html) {
+	public String transformJSOUP(Document document, JSONObject json, String dom, Elements html) {
 		JSONArray values = (JSONArray) json.get(HTML_TAG);
 		JSONObject inArray = (JSONObject) values.get(0);
 		String xmlns = (String) inArray.get("xmlns");

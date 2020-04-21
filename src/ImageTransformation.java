@@ -16,7 +16,7 @@ public class ImageTransformation {
 		return toWrite;
 	}
 	
-	public static String transformJSOUP(Document document, JSONObject json, String dom, Elements html) {
+	public String transformJSOUP(Document document, JSONObject json, String dom, Elements html) {
 		JSONArray values = (JSONArray) json.get(IMG_TAG);
 		JSONObject inArray = (JSONObject) values.get(0);
 		String value = (String) inArray.get("src");

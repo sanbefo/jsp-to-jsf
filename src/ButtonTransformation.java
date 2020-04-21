@@ -18,7 +18,7 @@ public class ButtonTransformation {
 		return toWrite;
 	}
 
-	public static String transformJSOUP(Document document, JSONObject json, String dom, Elements html) {
+	public String transformJSOUP(Document document, JSONObject json, String dom, Elements html) {
 		JSONArray values = (JSONArray) json.get(BUTTON_TAG);
 		JSONObject inArray = (JSONObject) values.get(0);
 		String button = (String) inArray.get(BUTTON_TAG);//tag

@@ -15,7 +15,7 @@ public class ATransformation {
 		return toWrite;
 	}
 
-	public static String transformJSOUP(Document document, JSONObject json, String dom, Elements html) {
+	public String transformJSOUP(Document document, JSONObject json, String dom, Elements html) {
 		JSONArray values = (JSONArray) json.get(A_TAG);
 		JSONObject inArray = (JSONObject) values.get(0);
 		String value = (String) inArray.get("href");

@@ -9,7 +9,7 @@ public class SelectTransformation {
 	private static final String SELECT_TAG = "select";
 	private static final String SELECT_END_TAG = "/select";
 
-	public static String transformJSOUP(Document document, JSONObject json, String dom, Elements html) {
+	public String transformJSOUP(Document document, JSONObject json, String dom, Elements html) {
 		String select = (String) json.get(SELECT_TAG);
 		String selectEnd = (String) json.get(SELECT_END_TAG);
 		Elements tokens = document.getElementsByTag(SELECT_TAG);

@@ -102,13 +102,20 @@ public class JSPtoJSF {
 			}
 			Document doc = Jsoup.parse(dom);
 			Elements html = doc.getElementsByTag("html");
-			String res = HTMLTransformation.transformJSOUP(doc, jsonObject, dom, html);
-			res = SelectTransformation.transformJSOUP(doc, jsonObject, res, html);
-			res = OptionTransformation.transformJSOUP(doc, jsonObject, res, html);
-			res = ImageTransformation.transformJSOUP(doc, jsonObject, res, html);
-			res = ButtonTransformation.transformJSOUP(doc, jsonObject, res, html);
-			res = InputTransformation.transformJSOUP(doc, jsonObject, res, html);
-			res = ATransformation.transformJSOUP(doc, jsonObject, res, html);
+			HTMLTransformation htmlT = new HTMLTransformation();
+			SelectTransformation selectT = new SelectTransformation();
+			OptionTransformation optionT = new OptionTransformation();
+			ImageTransformation imageT = new ImageTransformation();
+			ButtonTransformation buttonT = new ButtonTransformation();
+			InputTransformation inputT = new InputTransformation();
+			ATransformation aT =  new ATransformation();
+			String res = htmlT.transformJSOUP(doc, jsonObject, dom, html);
+			res = selectT.transformJSOUP(doc, jsonObject, res, html);
+			res = optionT.transformJSOUP(doc, jsonObject, res, html);
+			res = imageT.transformJSOUP(doc, jsonObject, res, html);
+			res = buttonT.transformJSOUP(doc, jsonObject, res, html);
+			res = inputT.transformJSOUP(doc, jsonObject, res, html);
+			res = aT.transformJSOUP(doc, jsonObject, res, html);
 			System.out.println(res);
 
 //			String xmlns = (String) inArray.get("xmlns");
