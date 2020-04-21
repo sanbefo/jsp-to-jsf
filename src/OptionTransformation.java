@@ -5,7 +5,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-public class OptionTransformation {
+public class OptionTransformation extends Transformation {
 
 	private final static String OPTION_TAG = "option";
 

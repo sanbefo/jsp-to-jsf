@@ -4,7 +4,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-public class SelectTransformation {
+public class SelectTransformation extends Transformation {
 
 	private static final String SELECT_TAG = "select";
 	private static final String SELECT_END_TAG = "/select";

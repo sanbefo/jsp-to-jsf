@@ -5,7 +5,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-public class ButtonTransformation {
+public class ButtonTransformation extends Transformation {
 
 	private final static String BUTTON_TAG = "button";
 	public static String transform(String original, JSONObject json, String tag, JSONArray inJson, JSONObject inArray) {

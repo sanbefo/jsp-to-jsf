@@ -4,7 +4,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-public class ImageTransformation {
+public class ImageTransformation extends Transformation {
 
 	private final static String IMG_TAG = "img";
 	

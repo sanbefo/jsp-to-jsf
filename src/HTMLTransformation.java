@@ -3,7 +3,7 @@ import org.json.simple.JSONObject;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
-public class HTMLTransformation {
+public class HTMLTransformation extends Transformation {
 
 	private final static String HTML_TAG = "html";
 

@@ -7,7 +7,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-public class InputTransformation {
+public class InputTransformation extends Transformation {
 
 	private final static String INPUT_TAG = "input";
 

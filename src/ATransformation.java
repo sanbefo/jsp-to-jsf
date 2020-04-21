@@ -4,7 +4,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-public class ATransformation {
+public class ATransformation extends Transformation {
 	
 	private static final String A_TAG = "a";
 	public static String transform(String original, JSONObject json, String tag, JSONArray inJson, JSONObject inArray) {
