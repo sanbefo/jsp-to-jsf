@@ -8,6 +8,11 @@ import org.jsoup.select.Elements;
 public class OptionTransformation extends Transformation {
 
 	private final static String OPTION_TAG = "option";
+	private JSONObject json;
+
+	public OptionTransformation(JSONObject json) {
+		this.json = json;
+	}
 
 	public static String transform(String original, JSONObject json, String tag, JSONArray inJson, JSONObject inArray) {
 		String value = (String) inArray.get("value");
@@ -20,7 +25,7 @@ public class OptionTransformation extends Transformation {
 		return toWrite;
 	}
 
-	public String transformJSOUP(Document document, JSONObject json, String dom, Elements html) {
+	public String transformJSOUP(Document document, String dom) {
 		JSONArray values = (JSONArray) json.get(OPTION_TAG);
 		JSONObject inArray = (JSONObject) values.get(0);
 		String value = (String) inArray.get("value");

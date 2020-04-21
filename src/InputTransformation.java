@@ -10,6 +10,11 @@ import org.jsoup.select.Elements;
 public class InputTransformation extends Transformation {
 
 	private final static String INPUT_TAG = "input";
+	private JSONObject json;
+
+	public InputTransformation(JSONObject json) {
+		this.json = json;
+	}
 
 	public static String transform(String original, JSONObject json, String tag, JSONArray inJson, JSONObject inArray) {
 		String line = original;
@@ -30,7 +35,7 @@ public class InputTransformation extends Transformation {
 		return toWrite;
 	}
 
-	public String transformJSOUP(Document document, JSONObject json, String dom, Elements html) {
+	public String transformJSOUP(Document document, String dom) {
 		JSONArray values = (JSONArray) json.get(INPUT_TAG);
 		JSONObject inArray = (JSONObject) values.get(0);
 		JSONArray array = (JSONArray) inArray.get("type");

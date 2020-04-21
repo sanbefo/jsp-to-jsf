@@ -6,8 +6,13 @@ import org.jsoup.select.Elements;
 public class HTMLTransformation extends Transformation {
 
 	private final static String HTML_TAG = "html";
+	private JSONObject json;
 
-	public String transformJSOUP(Document document, JSONObject json, String dom, Elements html) {
+	public HTMLTransformation(JSONObject json) {
+		this.json = json;
+	}
+
+	public String transformJSOUP(Document document, String dom) {
 		JSONArray values = (JSONArray) json.get(HTML_TAG);
 		JSONObject inArray = (JSONObject) values.get(0);
 		String xmlns = (String) inArray.get("xmlns");

@@ -7,6 +7,12 @@ import org.jsoup.select.Elements;
 public class ATransformation extends Transformation {
 	
 	private static final String A_TAG = "a";
+	private JSONObject json;
+
+	public ATransformation(JSONObject json) {
+		this.json = json;
+	}
+
 	public static String transform(String original, JSONObject json, String tag, JSONArray inJson, JSONObject inArray) {
 		String toWrite = original;
 		for (Object key : inArray.keySet()) {
@@ -15,7 +21,7 @@ public class ATransformation extends Transformation {
 		return toWrite;
 	}
 
-	public String transformJSOUP(Document document, JSONObject json, String dom, Elements html) {
+	public String transformJSOUP(Document document, String dom) {
 		JSONArray values = (JSONArray) json.get(A_TAG);
 		JSONObject inArray = (JSONObject) values.get(0);
 		String value = (String) inArray.get("href");

@@ -8,8 +8,13 @@ public class SelectTransformation extends Transformation {
 
 	private static final String SELECT_TAG = "select";
 	private static final String SELECT_END_TAG = "/select";
+	private JSONObject json;
 
-	public String transformJSOUP(Document document, JSONObject json, String dom, Elements html) {
+	public SelectTransformation(JSONObject json) {
+		this.json = json;
+	}
+
+	public String transformJSOUP(Document document, String dom) {
 		String select = (String) json.get(SELECT_TAG);
 		String selectEnd = (String) json.get(SELECT_END_TAG);
 		Elements tokens = document.getElementsByTag(SELECT_TAG);

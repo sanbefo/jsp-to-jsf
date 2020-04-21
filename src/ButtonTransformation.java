@@ -8,6 +8,12 @@ import org.jsoup.select.Elements;
 public class ButtonTransformation extends Transformation {
 
 	private final static String BUTTON_TAG = "button";
+	private JSONObject json;
+
+	public ButtonTransformation(JSONObject json) {
+		this.json = json;
+	}
+
 	public static String transform(String original, JSONObject json, String tag, JSONArray inJson, JSONObject inArray) {
 		String toWrite = original;
 		Document doc = Jsoup.parse(original);
@@ -18,7 +24,7 @@ public class ButtonTransformation extends Transformation {
 		return toWrite;
 	}
 
-	public String transformJSOUP(Document document, JSONObject json, String dom, Elements html) {
+	public String transformJSOUP(Document document, String dom) {
 		JSONArray values = (JSONArray) json.get(BUTTON_TAG);
 		JSONObject inArray = (JSONObject) values.get(0);
 		String button = (String) inArray.get(BUTTON_TAG);//tag

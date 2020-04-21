@@ -87,12 +87,32 @@ public class JSPtoJSF {
 		System.out.println("===============================================");
 	}
 
+	public static String domJsoup(JSONObject json, String dom, File fileInput) throws IOException {
+		Document document = Jsoup.parse(fileInput, "UTF-8");
+
+		Transformation[] transformers = {
+			new HTMLTransformation(json),
+			new SelectTransformation(json),
+			new ATransformation(json),
+			new OptionTransformation(json),
+			new ImageTransformation(json),
+			new ButtonTransformation(json),
+			new InputTransformation(json),
+		};
+
+		for (Transformation transformer : transformers) {
+			dom = transformer.transformJSOUP(document, dom);
+		}
+
+		return dom;
+	}
+	
 	public static void main(String[] args) throws IOException, ParseException {
 		message("START!!!");
 		JSONParser parser = new JSONParser();
 		try {
 			Reader dictionary = new FileReader(dictionaryFile);
-			JSONObject jsonObject = (JSONObject) parser.parse(dictionary);
+			JSONObject json = (JSONObject) parser.parse(dictionary);
 			File fileInput = new File(jspFile);
 			BufferedReader br = new BufferedReader(new FileReader(fileInput));
 			String fileLine;
@@ -100,43 +120,24 @@ public class JSPtoJSF {
 			while ((fileLine = br.readLine()) != null) {
 				dom += fileLine + "\n";
 			}
-			Document doc = Jsoup.parse(dom);
-			Elements html = doc.getElementsByTag("html");
-			HTMLTransformation htmlT = new HTMLTransformation();
-			SelectTransformation selectT = new SelectTransformation();
-			OptionTransformation optionT = new OptionTransformation();
-			ImageTransformation imageT = new ImageTransformation();
-			ButtonTransformation buttonT = new ButtonTransformation();
-			InputTransformation inputT = new InputTransformation();
-			ATransformation aT =  new ATransformation();
-			String res = htmlT.transformJSOUP(doc, jsonObject, dom, html);
-			res = selectT.transformJSOUP(doc, jsonObject, res, html);
-			res = optionT.transformJSOUP(doc, jsonObject, res, html);
-			res = imageT.transformJSOUP(doc, jsonObject, res, html);
-			res = buttonT.transformJSOUP(doc, jsonObject, res, html);
-			res = inputT.transformJSOUP(doc, jsonObject, res, html);
-			res = aT.transformJSOUP(doc, jsonObject, res, html);
+			br.close();
+
+			String res = domJsoup(json, dom, fileInput);
+
 			System.out.println(res);
 
-//			String xmlns = (String) inArray.get("xmlns");
-//			String xmlnsh = (String) inArray.get("xmlns:h");
-//			Document doc = Jsoup.parse(original);
-//			Elements html = doc.getElementsByTag(tag);
-//			html.attr("xmlns", "asd").attr("xmlns:h", "asdf");
-
-//			System.out.println(html);
-			if (1 == 0) {
-				File fileOutput = new File("test.txt");
-				FileWriter fr = new FileWriter(fileOutput);
-				BufferedWriter writer = new BufferedWriter(fr);
-				BufferedReader reader = new BufferedReader(new FileReader(fileInput));
-				String line;
-				while ((line = reader.readLine()) != null) {
-					replaceLine(line, jsonObject, writer);
-				}
-				reader.close();
-				writer.close();
-			}
+//			if (1 == 0) {
+//				File fileOutput = new File("test.txt");
+//				FileWriter fr = new FileWriter(fileOutput);
+//				BufferedWriter writer = new BufferedWriter(fr);
+//				BufferedReader reader = new BufferedReader(new FileReader(fileInput));
+//				String line;
+//				while ((line = reader.readLine()) != null) {
+//					replaceLine(line, json, writer);
+//				}
+//				reader.close();
+//				writer.close();
+//			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
