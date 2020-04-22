@@ -1,7 +1,10 @@
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.jsoup.nodes.Attributes;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.jsoup.nodes.Node;
+import org.jsoup.parser.Tag;
 import org.jsoup.select.Elements;
 
 public class SelectTransformation extends Transformation {
@@ -18,13 +21,13 @@ public class SelectTransformation extends Transformation {
 		String select = (String) json.get(SELECT_TAG);
 		String selectEnd = (String) json.get(SELECT_END_TAG);
 		Elements tokens = document.getElementsByTag(SELECT_TAG);
+		dom = dom.replace(SELECT_END_TAG, selectEnd);
 		for (Element token : tokens) {
 			String original = token.toString();
 			String jsfTag = "\n";
 			jsfTag += token.toString().replaceFirst(SELECT_TAG, select);
 			dom = dom.replace(original, jsfTag);
 		}
-		dom = dom.replace(SELECT_END_TAG, selectEnd);
 		return dom;
 	}
 }

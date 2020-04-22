@@ -92,12 +92,13 @@ public class JSPtoJSF {
 
 		Transformation[] transformers = {
 			new HTMLTransformation(json),
+			new InputTransformation(json),
 			new SelectTransformation(json),
 			new ATransformation(json),
 			new OptionTransformation(json),
 			new ImageTransformation(json),
 			new ButtonTransformation(json),
-			new InputTransformation(json),
+			new TableTransformation(json),
 		};
 
 		for (Transformation transformer : transformers) {
@@ -126,6 +127,8 @@ public class JSPtoJSF {
 
 			System.out.println(res);
 
+			
+			
 //			if (1 == 0) {
 //				File fileOutput = new File("test.txt");
 //				FileWriter fr = new FileWriter(fileOutput);

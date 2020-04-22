@@ -8,7 +8,7 @@ public class ImageTransformation extends Transformation {
 
 	private final static String IMG_TAG = "img";
 	private JSONObject json;
-	
+
 	public ImageTransformation(JSONObject json) {
 		this.json = json;
 	}
@@ -20,7 +20,7 @@ public class ImageTransformation extends Transformation {
 		}
 		return toWrite;
 	}
-	
+
 	public String transformJSOUP(Document document, String dom) {
 		JSONArray values = (JSONArray) json.get(IMG_TAG);
 		JSONObject inArray = (JSONObject) values.get(0);

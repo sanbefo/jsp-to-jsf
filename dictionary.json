@@ -22,7 +22,8 @@
 			"checkbox": "h:selectBooleanCheckbox",
 			"password": "h:inputSecret",
 			"radio": "h:selectOneRadio",
-			"text": "h:inputText"
+			"text": "h:inputText",
+			"submit": "h:commandButton"
 		}]
 	}],
 	"a": [{
@@ -39,5 +40,11 @@
 	"label": "h:outputText",
 	"/label": "/h:outputText",
 	"form": "h:form",
-	"/form": "/h:form"
+	"/form": "/h:form",
+	"table": "h:panelGrid",
+	"/table": "/h:panelGrid",
+	"thead": "f:facet",
+	"/thead": "/f:facet",
+	"tfoot": "f:facet",
+	"/tfoot": "/f:facet"
 }
