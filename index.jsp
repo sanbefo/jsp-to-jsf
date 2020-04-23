@@ -1,4 +1,6 @@
 <html>
+	<script type="text/javascript" src="/JavaServerFaces/faces/javax.faces.resource/common.js?ln=js">
+	</script>
 	<head>
 		<title>First JSP</title>
 	</head>
@@ -21,29 +23,28 @@
 		<img src="http://www.tutorialspoint.com/images/jsf-mini-logo.png">
 		<button type="button">Click Me!</button>
 		<table id = "j_idt10:panel" border = "1" cellpadding = "10" cellspacing = "1">
-		   <thead>
-		      <tr><th colspan = "2" scope = "colgroup">Login</th></tr>
-		   </thead>
-		   <tbody>
-		      <tr>
-		         <td>Username</td>
-		         <td>xxxxxxxxxxxxx</td>
-		      </tr>
-		      <tr>
-		         <td>Password</td>
-		         <td>yyyyyyyyyyyyyy</td>
-		      </tr>
-		   </tbody>
-		   <tfoot>
-		      <tr>
-		         <td colspan = "2">
-		            <span style = "display:block; text-align:center">
-		               <input id = "j_idt10:submit" type = "submit"
-		                  name = "j_idt10:submit" value = "Submit" />
-		            </span>
-		         </td>
-		      </tr>
-		   </tfoot>
+			<thead>
+				<tr><th colspan = "2" scope = "colgroup">Login</th></tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Username</td>
+					<td>xxxxxxxxxxxxx</td>
+				</tr>
+				<tr>
+					<td>Password</td>
+					<td>yyyyyyyyyyyyyy</td>
+				</tr>
+			</tbody>
+			<tfoot>
+				<tr>
+					<td colspan = "2">
+						<span style = "display:block; text-align:center">
+							<input id = "j_idt10:submit" type = "submit" name = "j_idt10:submit" value = "Submit" />
+						</span>
+					</td>
+				</tr>
+			</tfoot>
 		</table>
 		<%
 			double num = Math.random();

@@ -32,7 +32,6 @@ public class TableTransformation  extends Transformation {
 		Elements tfoot = document.getElementsByTag("tfoot");
 		dom = dom.replaceFirst(TFOOT_TAG, begin + " name = \"footer\"").replace(TFOOT_END_TAG, end);
 
-		
 		Elements[] groups = {
 			thead.first().getElementsByTag("tr"),
 			tfoot.first().getElementsByTag("tr"),
@@ -47,8 +46,8 @@ public class TableTransformation  extends Transformation {
 				}
 			}
 		}
-		dom = dom.replace("<tr>", "").replace("</tr>", "").replace("<tbody>", "").replace("</tbody>", "");
-		System.out.println(dom);
+		dom = dom.replace("<tr>", "").replace("</tr>", "").replace("<tbody>", "").replace("</tbody>", "")
+				.replace("\t", "");
 		return dom;
 	}
 }

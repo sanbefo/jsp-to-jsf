@@ -87,11 +87,12 @@ public class JSPtoJSF {
 		System.out.println("===============================================");
 	}
 
-	public static String domJsoup(JSONObject json, String dom, File fileInput) throws IOException {
+	public static String domJsoup(JSONObject json, File fileInput) throws IOException {
 		Document document = Jsoup.parse(fileInput, "UTF-8");
 
 		Transformation[] transformers = {
 			new HTMLTransformation(json),
+			new ScriptTransformation(json),
 			new InputTransformation(json),
 			new SelectTransformation(json),
 			new ATransformation(json),
@@ -100,6 +101,7 @@ public class JSPtoJSF {
 			new ButtonTransformation(json),
 			new TableTransformation(json),
 		};
+		String dom = document.html();
 
 		for (Transformation transformer : transformers) {
 			dom = transformer.transformJSOUP(document, dom);
@@ -117,13 +119,13 @@ public class JSPtoJSF {
 			File fileInput = new File(jspFile);
 			BufferedReader br = new BufferedReader(new FileReader(fileInput));
 			String fileLine;
-			String dom = "";
-			while ((fileLine = br.readLine()) != null) {
-				dom += fileLine + "\n";
-			}
+//			String dom = "";
+//			while ((fileLine = br.readLine()) != null) {
+//				dom += fileLine + "\n";
+//			}
 			br.close();
 
-			String res = domJsoup(json, dom, fileInput);
+			String res = domJsoup(json, fileInput);
 
 			System.out.println(res);
 

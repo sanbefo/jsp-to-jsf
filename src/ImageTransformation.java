@@ -25,13 +25,13 @@ public class ImageTransformation extends Transformation {
 		JSONArray values = (JSONArray) json.get(IMG_TAG);
 		JSONObject inArray = (JSONObject) values.get(0);
 		String value = (String) inArray.get("src");
-		String img = (String) inArray.get(IMG_TAG);//tag
+		String tag = (String) inArray.get(IMG_TAG);
 		Elements tokens = document.getElementsByTag(IMG_TAG);
 		for (Element token : tokens) {
 			String original = token.toString();
 			token.attr(value, token.attr("src"));
 			token.removeAttr("src");
-			String jsfTag = token.toString().replaceFirst(IMG_TAG, img).replace(">", "/>\n");
+			String jsfTag = token.toString().replaceFirst(IMG_TAG, tag).replace(">", "/>\n");
 			dom = dom.replace(original, jsfTag);
 		}
 		return dom;

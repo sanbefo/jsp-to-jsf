@@ -1,5 +1,4 @@
 =============================================================
-<input type="checkbox"> <h:selectBooleanCheckbox>
 <input type="radio"> <h:selectOneRadio>
 
 <input type="button">

@@ -37,6 +37,11 @@
 		"option": "f:selectItem",
 		"value": "itemValue"
 	}],
+	"script": [{
+		"script": "h:outputScript",
+		"type": "library",
+		"src": "name"
+	}],
 	"label": "h:outputText",
 	"/label": "/h:outputText",
 	"form": "h:form",
