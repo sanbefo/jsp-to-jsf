@@ -13,16 +13,6 @@ public class ScriptTransformation extends Transformation {
 		this.json = json;
 	}
 
-//	"script": "h:outputScript",
-//	"type": "library",
-//	"src": "name"
-
-//	<h:outputScript library="js" name="common.js" />
-//
-//	<script type="text/javascript"
-//	  	src="/JavaServerFaces/faces/javax.faces.resource/common.js?ln=js">
-//	</script>
-
 	public String transformJSOUP(Document document, String dom) {
 		JSONArray values = (JSONArray) json.get(SCRIPT_TAG);
 		JSONObject inArray = (JSONObject) values.get(0);

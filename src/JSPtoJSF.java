@@ -91,6 +91,7 @@ public class JSPtoJSF {
 
 		Transformation[] transformers = {
 			new HTMLTransformation(json),
+			new LinkTransformation(json),
 			new ScriptTransformation(json),
 			new InputTransformation(json),
 			new OptionTransformation(json),

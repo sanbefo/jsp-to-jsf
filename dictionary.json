@@ -42,6 +42,11 @@
 		"type": "library",
 		"src": "name"
 	}],
+	"link": [{
+		"link": "h:outputStylesheet",
+		"type": "library",
+		"href": "name"
+	}],
 	"label": "h:outputLabel",
 	"/label": "/h:outputLabel",
 	"span": "h:outputText",

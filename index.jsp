@@ -1,7 +1,8 @@
 <html>
 	<script type="text/javascript" src="/JavaServerFaces/faces/javax.faces.resource/common.js?ln=js">
 	</script>
-	<head>
+	<link type = "text/css" rel = "stylesheet" href = "/helloworld/javax.faces.resource/styles.css.jsf?ln = css" /> 
+   	<head>
 		<title>First JSP</title>
 	</head>
 	<body>
