@@ -1,8 +1,5 @@
-import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 
 public class SimpleTransformation extends Transformation {
 	private JSONObject json;
@@ -16,27 +13,20 @@ public class SimpleTransformation extends Transformation {
 	private final static String DIV_END_TAG = "/div";
 	private final static String SPAN_TAG = "span";
 	private final static String SPAN_END_TAG = "/span";
+	private final static String SELECT_TAG = "select";
+	private final static String SELECT_END_TAG = "/select";
+	private final static String[] properties = { BODY_TAG, BODY_END_TAG, HEAD_TAG, HEAD_END_TAG, LABEL_TAG, LABEL_END_TAG, DIV_TAG, DIV_END_TAG, SPAN_TAG, SPAN_END_TAG, SELECT_TAG, SELECT_END_TAG };
 
 	public SimpleTransformation(JSONObject json) {
 		this.json = json;
 	}
 
 	public String transformJSOUP(Document document, String dom) {
-//		JSONArray values = (JSONArray) json.get(INPUT_TAG);
-//		JSONObject inArray = (JSONObject) values.get(0);
-//		JSONArray array = (JSONArray) inArray.get("type");
-//		JSONObject types = (JSONObject) array.get(0);
-//		Elements tokens = document.getElementsByTag(INPUT_TAG);
-//		for (Element token : tokens) {
-//			String type = token.attr("type");
-//			String tag = (String) types.get(type);
-//			String original = token.toString();
-//			token.removeAttr("type");
-//			token.text("");
-//			String jsfTag = token.toString().replaceFirst(INPUT_TAG, tag)
-//					.replace("</input>", "").replace(">", " />");
-//			dom = dom.replace(original, jsfTag);
-//		}
+		for (String property : properties) {
+			String tag = (String) json.get(property);
+			dom = dom.replace("<" + property, "\n<" + tag);
+		}
+		dom = dom.replaceAll("(?m)^[ \t]*\r?\n", "");
 		return dom;
 	}
 }

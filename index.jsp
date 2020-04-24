@@ -5,14 +5,16 @@
 		<title>First JSP</title>
 	</head>
 	<body>
-		<select name="j_idt6:j_idt8">
-			<option value="1">Item 1</option>
-			<option value="2">Item 2</option>
-		</select>
-		<select name="j_idt6:j_idt8">
-			<option value="3">Item 3</option>
-			<option value="4">Item 4</option>
-		</select>
+		<div>
+			<select name="j_idt6:j_idt8">
+				<option value="1">Item 1</option>
+				<option value="2">Item 2</option>
+			</select>
+			<select name="j_idt6:j_idt8">
+				<option value="3">Item 3</option>
+				<option value="4">Item 4</option>
+			</select>
+		</div>
 		<input
 			type="hidden"
 			id="custId"

@@ -62,7 +62,6 @@ public class JSPtoJSF {
 	}
 
 	public static void replaceLine(String line, JSONObject json, BufferedWriter writer) throws IOException, ParseException {
-		//TODO table tag missing
 		String[] stringTags = new String[]{ "img", "input", "option", "a", "button", "html" };
 		List<String> complexTags = Arrays.asList(stringTags);
 
@@ -94,12 +93,12 @@ public class JSPtoJSF {
 			new HTMLTransformation(json),
 			new ScriptTransformation(json),
 			new InputTransformation(json),
-			new SelectTransformation(json),
 			new OptionTransformation(json),
 			new ATransformation(json),
 			new ImageTransformation(json),
 			new ButtonTransformation(json),
 			new TableTransformation(json),
+			new SimpleTransformation(json),
 		};
 		String dom = document.html();
 		
@@ -120,9 +119,6 @@ public class JSPtoJSF {
 			Reader dictionary = new FileReader(dictionaryFile);
 			JSONObject json = (JSONObject) parser.parse(dictionary);
 			File fileInput = new File(jspFile);
-			BufferedReader br = new BufferedReader(new FileReader(fileInput));
-			String fileLine;
-			br.close();
 
 			String res = domJsoup(json, fileInput);
 
