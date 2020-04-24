@@ -41,6 +41,7 @@ public class OptionTransformation extends Transformation {
 			jsfTag += token.toString().replaceFirst(OPTION_TAG, option).replace("</option>", "\n").replace(">", "/>");
 			dom = dom.replace(original, jsfTag);
 		}
+		dom = dom.replaceAll("(?m)^[ \t]*\r?\n", "");
 		return dom;
 	}
 }

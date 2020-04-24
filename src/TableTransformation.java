@@ -47,7 +47,8 @@ public class TableTransformation  extends Transformation {
 			}
 		}
 		dom = dom.replace("<tr>", "").replace("</tr>", "").replace("<tbody>", "").replace("</tbody>", "")
-				.replace("\t", "");
+				.replace("<td>", "").replace("</td>", "").replace("\t", "");
+		dom = dom.replaceAll("(?m)^[ \t]*\r?\n", "");
 		return dom;
 	}
 }

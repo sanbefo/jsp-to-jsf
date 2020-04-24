@@ -95,18 +95,21 @@ public class JSPtoJSF {
 			new ScriptTransformation(json),
 			new InputTransformation(json),
 			new SelectTransformation(json),
-			new ATransformation(json),
 			new OptionTransformation(json),
+			new ATransformation(json),
 			new ImageTransformation(json),
 			new ButtonTransformation(json),
 			new TableTransformation(json),
 		};
 		String dom = document.html();
+		
+		System.out.println(dom);
 
 		for (Transformation transformer : transformers) {
 			dom = transformer.transformJSOUP(document, dom);
+			System.out.println("====================================================================");
+			System.out.println(dom);
 		}
-
 		return dom;
 	}
 	
@@ -119,10 +122,6 @@ public class JSPtoJSF {
 			File fileInput = new File(jspFile);
 			BufferedReader br = new BufferedReader(new FileReader(fileInput));
 			String fileLine;
-//			String dom = "";
-//			while ((fileLine = br.readLine()) != null) {
-//				dom += fileLine + "\n";
-//			}
 			br.close();
 
 			String res = domJsoup(json, fileInput);
