@@ -42,14 +42,16 @@ public class InputTransformation extends Transformation {
 		JSONObject types = (JSONObject) array.get(0);
 		Elements tokens = document.getElementsByTag(INPUT_TAG);
 		for (Element token : tokens) {
-			String type = token.attr("type");
-			String tag = (String) types.get(type);
-			String original = token.toString();
-			token.removeAttr("type");
-			token.text("");
-			String jsfTag = token.toString().replaceFirst(INPUT_TAG, tag)
-					.replace("</input>", "").replace(">", " />");
-			dom = dom.replace(original, jsfTag);
+			if (token.hasAttr("type")) {
+				String type = token.attr("type");
+				String tag = (String) types.get(type);
+				String original = token.toString();
+				token.removeAttr("type");
+				token.text("");
+				String jsfTag = token.toString().replaceFirst(INPUT_TAG, tag)
+						.replace("</input>", "").replace(">", " />");
+				dom = dom.replace(original, jsfTag);
+			}
 		}
 		return dom;
 	}

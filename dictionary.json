@@ -37,6 +37,13 @@
 		"option": "f:selectItem",
 		"value": "itemValue"
 	}],
+	"radio": [{
+		"radio": "f:selectItem",
+		"value": "itemValue",
+		"label": "itemLabel",
+		"select": "h:selectOneRadio",
+		"/select": "/h:selectOneRadio"
+	}],
 	"script": [{
 		"script": "h:outputScript",
 		"type": "library",

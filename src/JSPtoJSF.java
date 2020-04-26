@@ -87,12 +87,14 @@ public class JSPtoJSF {
 	}
 
 	public static String domJsoup(JSONObject json, File fileInput) throws IOException {
+		//TODO include radio buttons
 		Document document = Jsoup.parse(fileInput, "UTF-8");
 
 		Transformation[] transformers = {
 			new HTMLTransformation(json),
 			new LinkTransformation(json),
 			new ScriptTransformation(json),
+			new RadioTransformation(json),
 			new InputTransformation(json),
 			new OptionTransformation(json),
 			new ATransformation(json),
@@ -112,7 +114,7 @@ public class JSPtoJSF {
 		}
 		return dom;
 	}
-	
+
 	public static void main(String[] args) throws IOException, ParseException {
 		message("START!!!");
 		JSONParser parser = new JSONParser();
@@ -123,10 +125,7 @@ public class JSPtoJSF {
 
 			String res = domJsoup(json, fileInput);
 
-			System.out.println(res);
-
-			
-			
+//			System.out.println(res);
 //			if (1 == 0) {
 //				File fileOutput = new File("test.txt");
 //				FileWriter fr = new FileWriter(fileOutput);
