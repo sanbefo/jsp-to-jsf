@@ -16,18 +16,14 @@ import java.util.List;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.json.simple.parser.*;
-import org.jsoup.*;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
 public class JSPtoJSF {
 
-	private final static String A_TAG = "a";
-	private final static String IMG_TAG = "img";
-	private final static String INPUT_TAG = "input";
-	private final static String BUTTON_TAG = "button";
-	private final static String OPTION_TAG = "option";
 	private final static String jspFile = "index.jsp";
 	private final static String dictionaryFile = "dictionary.json";
 
@@ -39,47 +35,6 @@ public class JSPtoJSF {
 		return new File(name + newExtension);
 	}
 
-	public static String switchTag(String original, JSONObject json, String tag, JSONArray inJson, JSONObject inArray) {
-		String result = "";
-		switch(tag) {
-			case A_TAG:
-				result = ATransformation.transform(original, json, tag, inJson, inArray);
-				break;
-			case IMG_TAG:
-				result = ImageTransformation.transform(original, json, tag, inJson, inArray);
-				break;
-			case INPUT_TAG:
-				result = InputTransformation.transform(original, json, tag, inJson, inArray);
-				break;
-			case OPTION_TAG:
-				result = OptionTransformation.transform(original, json, tag, inJson, inArray);
-				break;
-			case BUTTON_TAG:
-				result = ButtonTransformation.transform(original, json, tag, inJson, inArray);
-				break;
-		}
-		return result;
-	}
-
-	public static void replaceLine(String line, JSONObject json, BufferedWriter writer) throws IOException, ParseException {
-		String[] stringTags = new String[]{ "img", "input", "option", "a", "button", "html" };
-		List<String> complexTags = Arrays.asList(stringTags);
-
-		String original = line;
-		line = line.replace("<", "").replace(">", "").trim();
-		String tag = line.split(" ")[0];
-		String toWrite = original;
-		if (complexTags.contains(tag)) {
-			JSONArray inJson = (JSONArray) json.get(tag);
-			JSONObject inArray = (JSONObject) inJson.get(0);
-			toWrite = switchTag(original, json, tag, inJson, inArray);
-		} else {
-			String inJson = (String) json.get(tag);
-			toWrite = inJson != null ? original.replaceFirst(tag, inJson) : original;
-		}
-		writer.write(toWrite + "\n");
-	}
-
 	public static void message(String message) {
 		System.out.println("===============================================");
 		System.out.println("||                 " + message + "                  ||");
@@ -87,30 +42,31 @@ public class JSPtoJSF {
 	}
 
 	public static String domJsoup(JSONObject json, File fileInput) throws IOException {
-		//TODO include radio buttons
 		Document document = Jsoup.parse(fileInput, "UTF-8");
 
 		Transformation[] transformers = {
-			new HTMLTransformation(json),
-			new LinkTransformation(json),
-			new ScriptTransformation(json),
-			new RadioTransformation(json),
-			new InputTransformation(json),
-			new OptionTransformation(json),
-			new ATransformation(json),
-			new ImageTransformation(json),
-			new ButtonTransformation(json),
-			new TableTransformation(json),
-			new SimpleTransformation(json),
+//			new HTMLTransformation(json),
+//			new LinkTransformation(json),
+//			new ScriptTransformation(json),
+//			new RadioTransformation(json),
+//			new InputTransformation(json),
+//			new OptionTransformation(json),
+//			new ATransformation(json),
+//			new ImageTransformation(json),
+//			new ButtonTransformation(json),
+//			new TableTransformation(json),
+//			new SimpleTransformation(json),
+			new JavaTransformation(json),
+//			new JSPTransformation(json),
 		};
-		String dom = document.html();
-		
-		System.out.println(dom);
+		String dom = document.toString();
+
+//		System.out.println(dom);
 
 		for (Transformation transformer : transformers) {
 			dom = transformer.transformJSOUP(document, dom);
-			System.out.println("====================================================================");
-			System.out.println(dom);
+//			System.out.println("====================================================================");
+//			System.out.println(dom);
 		}
 		return dom;
 	}

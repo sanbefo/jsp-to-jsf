@@ -2,6 +2,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
+import org.jdom2.*;
 
 public class HTMLTransformation extends Transformation {
 
@@ -17,6 +18,7 @@ public class HTMLTransformation extends Transformation {
 		JSONObject inArray = (JSONObject) values.get(0);
 		String xmlns = (String) inArray.get("xmlns");
 		String xmlnsh = (String) inArray.get("xmlns:h");
+//==========================
 		Elements token = document.getElementsByTag(HTML_TAG);
 		token.attr("xmlns", xmlns);
 		token.attr("xmlns:h", xmlnsh);

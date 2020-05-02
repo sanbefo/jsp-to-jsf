@@ -16,6 +16,9 @@
 				<option value="4">Item 4</option>
 			</select>
 		</div>
+		<%
+			double x = Math.random();
+		%>
 		<div>
 			<input type="radio" id="male" name="gender" value="male">
 			<label for="male">Male</label><br>
