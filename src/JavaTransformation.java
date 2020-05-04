@@ -71,18 +71,15 @@ public class JavaTransformation extends Transformation {
 		dom = dom.replace("&gt;", ">").replace("&lt;", "<");
 		Stack ends = new Stack();
 		for (String tag : tags) {
-			System.out.println("=================================================================================");
 			if (tag.contains("if")) {
 				String jsfTag = "\n<c:choose>\n\t";
 				addToStack(ends, "</c:choose>");
 				jsfTag += chooseTransform(tag, ends);
 				dom = dom.replace(tag, jsfTag);
-				System.out.println(dom);
 			}
 			if (tag.contains("for")) {
 				String jsfTag = forEachTransform(tag, ends);
 				dom = dom.replace(tag, jsfTag);
-				System.out.println(dom);
 			}
 			if (tag.contains("}")) {
 				if (!ends.empty()) {
@@ -92,17 +89,15 @@ public class JavaTransformation extends Transformation {
 						dom = dom.replaceFirst(" } ", ends.pop().toString());
 					}
 				}
-				System.out.println(dom);
 			}
 			if (tag.contains("else {")) {
 				tag = tag.replace("{", "");
 				dom = dom.replaceFirst("else ", "<c:otherwise>");
 				addToStack(ends, "\n</c:otherwise>\n");
-				System.out.println(dom);
 			}
 		}
 		System.out.println(dom.replace("%>", "").replace("<%", "").replace(">{", ">"));
-		System.out.println(tags);
+//		System.out.println(tags);
 		return dom.replace("%>", ">").replace("<%", "<");
 	}
 }

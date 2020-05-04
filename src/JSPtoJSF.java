@@ -81,7 +81,7 @@ public class JSPtoJSF {
 
 			String res = domJsoup(json, fileInput);
 
-//			System.out.println(res);
+			System.out.println(res);
 //			if (1 == 0) {
 //				File fileOutput = new File("test.txt");
 //				FileWriter fr = new FileWriter(fileOutput);
