@@ -30,6 +30,14 @@ public class JavaTransformation extends Transformation {
 		return "<c:when test = \"#{" + tag.substring(beginIndex, endIndex) + "}\">";
 	}
 
+	private String forEachTransform(String tag, Stack ends) {
+		int beginIndex = tag.indexOf("<") + 1;
+		int endIndex = tag.lastIndexOf(".");
+		addToStack(ends, "\n</c:forEach>\n");
+		String var = tag.substring(beginIndex, endIndex).trim();
+		return "<forEach items = \"#{" + var + "} var = \"" + var + "\">";
+	}
+
 	public String transformJSOUP(Document document, String dom) {
 		System.out.println(dom);
 		Pattern pattern = Pattern.compile("&lt;%(.*?)%&gt;", Pattern.DOTALL);
@@ -61,32 +69,36 @@ public class JavaTransformation extends Transformation {
 			}
 		}
 		dom = dom.replace("&gt;", ">").replace("&lt;", "<");
-		System.out.println(tags);
-		System.out.println(matches);
 		Stack ends = new Stack();
 		for (String tag : tags) {
-//			if (tag.contains("= ")) {
-//				String value = tag.replace("=", "");
-//				String jsfTag = "\n<c:out value=\"#{" + value.trim() + "}\"/>\n\t";
-//				dom = dom.replace(tag, jsfTag);
-//			}
+			System.out.println("=================================================================================");
 			if (tag.contains("if")) {
 				String jsfTag = "\n<c:choose>\n\t";
 				addToStack(ends, "</c:choose>");
 				jsfTag += chooseTransform(tag, ends);
 				dom = dom.replace(tag, jsfTag);
+				System.out.println(dom);
+			}
+			if (tag.contains("for")) {
+				String jsfTag = forEachTransform(tag, ends);
+				dom = dom.replace(tag, jsfTag);
+				System.out.println(dom);
 			}
 			if (tag.contains("}")) {
-				dom = dom.replaceFirst(" } ", ends.pop().toString());
+				if (!ends.empty()) {
+					if (ends.peek().toString() == "\n</c:otherwise>\n") {
+						dom = dom.replaceFirst(" } ", ends.pop().toString() + ends.pop().toString());
+					} else {
+						dom = dom.replaceFirst(" } ", ends.pop().toString());
+					}
+				}
+				System.out.println(dom);
 			}
 			if (tag.contains("else {")) {
-				System.out.println("=====================================");
-				System.out.println(tag);
 				tag = tag.replace("{", "");
-				System.out.println(tag);
-				System.out.println("=====================================");
 				dom = dom.replaceFirst("else ", "<c:otherwise>");
 				addToStack(ends, "\n</c:otherwise>\n");
+				System.out.println(dom);
 			}
 		}
 		System.out.println(dom.replace("%>", "").replace("<%", "").replace(">{", ">"));

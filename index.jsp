@@ -74,5 +74,23 @@
 		<a href="<%= request.getRequestURI() %>">
 			<h3>Try Again</h3>
 		</a>
+		<table border="1">
+			<tr>
+				<td>Festival Name:</td>
+	    		<td>Location:</td>
+        		<td>Start Date:</td>
+	    		<td>End Date:</td>
+		    	<td>URL:</td>
+			</tr>
+			<% for(int i = 0; i < allFestivals.size(); i+=1) { %>
+				<tr>
+					<td>${allFestivals.get(i).getFestivalName()}</td>
+					<td>${allFestivals.get(i).getLocation()}</td>
+					<td>${allFestivals.get(i).getStartDate()}</td>
+					<td>${allFestivals.get(i).getEndDate()}</td>
+					<td>${allFestivals.get(i).getURL()}</td>
+				</tr>
+			<% } %>
+		</table>
 	</body>
 </html>

@@ -7,3 +7,36 @@
 <input type="search">
 
 <select multiple>	<h:selectManyListbox>
+
+
+<h1>All Festival Information</h1>
+<jsp:useBean id="allFestivals" type="java.util.ArrayList" scope="session" />
+<table border="1">
+	<tr>
+		<td>Festival Name:</td>
+	    <td>Location:</td>
+        <td>Start Date:</td>
+	    <td>End Date:</td>
+	    <td>URL:</td>
+	</tr>
+	<% for(int i = 0; i < allFestivals.size(); i+=1) { %>
+		<tr>
+			<td>${allFestivals.get(i).getFestivalName()}</td>
+			<td>${allFestivals.get(i).getLocation()}</td>
+			<td>${allFestivals.get(i).getStartDate()}</td>
+			<td>${allFestivals.get(i).getEndDate()}</td>
+			<td>${allFestivals.get(i).getURL()}</td>
+		</tr>
+	<% } %>
+</table>
+
+
+<c:forEach items="${allFestivals}" var="festival">
+    <tr>
+        <td>${festival.festivalName}</td>
+        <td>${festival.location}</td>
+        <td>${festival.startDate}</td>
+        <td>${festival.endDate}</td>
+        <td>${festival.URL}</td>
+    </tr>
+</c:forEach>
