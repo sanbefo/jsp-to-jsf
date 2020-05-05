@@ -21,7 +21,7 @@ public class SimpleTransformation extends Transformation {
 		this.json = json;
 	}
 
-	public String transformJSOUP(Document document, String dom) {
+	public String transform(Document document, String dom) {
 		for (String property : properties) {
 			String tag = (String) json.get(property);
 			dom = dom.replace("<" + property, "\n<" + tag);

@@ -16,7 +16,7 @@ public class RadioTransformation extends Transformation {
 		this.json = json;
 	}
 
-	public String transformJSOUP(Document document, String dom) {
+	public String transform(Document document, String dom) {
 		Elements radios = document.getElementsByAttributeValue("type", RADIO_ATTR);
 		for (Element radio : radios) {
 			JSONArray values = (JSONArray) json.get(RADIO_ATTR);

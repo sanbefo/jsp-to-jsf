@@ -13,8 +13,9 @@ import org.jsoup.nodes.Document;
 public class JSPtoJSF {
 
 //	private final static String jspFile = "testFiles/verticalBar.html";
-	private final static String jspFile = "testFiles/hideMenu.html";
+//	private final static String jspFile = "testFiles/hideMenu.html";
 //	private final static String jspFile = "testFiles/googleSkeleton.html";
+	private final static String jspFile = "testFiles/buttonBar.html";
 //	private final static String jspFile = "testFiles/index.jsp";
 	private final static String dictionaryFile = "dictionary.json";
 
@@ -55,7 +56,7 @@ public class JSPtoJSF {
 //		System.out.println(dom);
 
 		for (Transformation transformer : transformers) {
-			dom = transformer.transformJSOUP(document, dom);
+			dom = transformer.transform(document, dom);
 //			System.out.println("====================================================================");
 //			System.out.println(dom);
 		}

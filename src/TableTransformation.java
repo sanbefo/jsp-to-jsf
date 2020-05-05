@@ -43,7 +43,7 @@ public class TableTransformation  extends Transformation {
 		return dom;
 	}
 
-	public String transformJSOUP(Document document, String dom) {
+	public String transform(Document document, String dom) {
 		Elements tables = document.getElementsByTag("table");
 		for (Element table : tables) {
 			String begin = (String) json.get(TABLE_TAG);

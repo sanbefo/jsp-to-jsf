@@ -13,15 +13,7 @@ public class ATransformation extends Transformation {
 		this.json = json;
 	}
 
-	public static String transform(String original, JSONObject json, String tag, JSONArray inJson, JSONObject inArray) {
-		String toWrite = original;
-		for (Object key : inArray.keySet()) {
-			toWrite = toWrite.replaceFirst("href", "value").replaceFirst(key.toString(), inArray.get(key).toString());
-		}
-		return toWrite;
-	}
-
-	public String transformJSOUP(Document document, String dom) {
+	public String transform(Document document, String dom) {
 		JSONArray values = (JSONArray) json.get(A_TAG);
 		JSONObject inArray = (JSONObject) values.get(0);
 		String value = (String) inArray.get("href");

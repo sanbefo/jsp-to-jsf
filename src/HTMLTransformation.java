@@ -17,7 +17,6 @@ public class HTMLTransformation extends Transformation {
 		JSONObject inArray = (JSONObject) values.get(0);
 		String xmlns = (String) inArray.get("xmlns");
 		String xmlnsh = (String) inArray.get("xmlns:h");
-//==========================
 		Elements token = document.getElementsByTag(HTML_TAG);
 		token.attr("xmlns", xmlns);
 		token.attr("xmlns:h", xmlnsh);

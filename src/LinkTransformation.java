@@ -13,7 +13,7 @@ public class LinkTransformation extends Transformation {
 		this.json = json;
 	}
 
-	public String transformJSOUP(Document document, String dom) {
+	public String transform(Document document, String dom) {
 		JSONArray values = (JSONArray) json.get(LINK_TAG);
 		JSONObject inArray = (JSONObject) values.get(0);
 		String library = (String) inArray.get("type");
