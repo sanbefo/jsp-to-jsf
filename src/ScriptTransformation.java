@@ -23,7 +23,6 @@ public class ScriptTransformation extends Transformation {
 		for (Element token : tokens) {
 			String nameAttr = token.attr("src");
 			String original = token.toString().replace("</script>", "");
-			token.attr(nameAttr, token.attr("src"));
 			token.attr(library, "js");
 			token.attr(name, nameAttr);
 			token.removeAttr("type");
