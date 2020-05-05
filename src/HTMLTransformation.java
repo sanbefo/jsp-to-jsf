@@ -2,7 +2,6 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
-import org.jdom2.*;
 
 public class HTMLTransformation extends Transformation {
 

@@ -1,30 +1,19 @@
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Reader;
-import java.io.StringReader;
-import java.io.StringWriter;
-import java.io.UnsupportedEncodingException;
-import java.util.Arrays;
-import java.util.List;
 
-import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.select.Elements;
 
 public class JSPtoJSF {
 
-	private final static String jspFile = "index.jsp";
+	private final static String jspFile = "googleSkeleton.html";
+//	private final static String jspFile = "index.jsp";
 	private final static String dictionaryFile = "dictionary.json";
 
 	public JSPtoJSF() {}
@@ -82,18 +71,6 @@ public class JSPtoJSF {
 			String res = domJsoup(json, fileInput);
 
 			System.out.println(res);
-//			if (1 == 0) {
-//				File fileOutput = new File("test.txt");
-//				FileWriter fr = new FileWriter(fileOutput);
-//				BufferedWriter writer = new BufferedWriter(fr);
-//				BufferedReader reader = new BufferedReader(new FileReader(fileInput));
-//				String line;
-//				while ((line = reader.readLine()) != null) {
-//					replaceLine(line, json, writer);
-//				}
-//				reader.close();
-//				writer.close();
-//			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}

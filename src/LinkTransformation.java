@@ -23,9 +23,9 @@ public class LinkTransformation extends Transformation {
 		for (Element token : tokens) {
 			String original = token.toString();
 			String nameAttr = token.attr("href");
-			token.attr(nameAttr, token.attr("href"));
 			token.attr(library, "css");
 			token.attr(name, nameAttr);
+			token.removeAttr("rel");
 			token.removeAttr("type");
 			token.removeAttr("href");
 			token.text("");

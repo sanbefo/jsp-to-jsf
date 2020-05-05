@@ -27,6 +27,9 @@
 			<td>${allFestivals.get(i).getEndDate()}</td>
 			<td>${allFestivals.get(i).getURL()}</td>
 		</tr>
+		<% if (1 > 2) { %>
+			<%= "hola" %>
+		<% } %>
 	<% } %>
 </table>
 

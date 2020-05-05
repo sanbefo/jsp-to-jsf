@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -12,25 +11,23 @@ import java.util.Stack;
 
 public class JavaTransformation extends Transformation {
 	private JSONObject json;
-//	private Stack ends;
 
 	public JavaTransformation(JSONObject json) {
 		this.json = json;
-//		this.ends = new Stack();
 	}
 
-	private void addToStack(Stack ends, String end) {
+	private void addToStack(Stack<String> ends, String end) {
 		ends.push(end);
 	}
-	
-	private String chooseTransform(String tag, Stack ends) {
+
+	private String chooseTransform(String tag, Stack<String> ends) {
 		int beginIndex = tag.indexOf("(") + 1;
 		int endIndex = tag.lastIndexOf(")");
 		addToStack(ends, "\n</c:when>\n");
 		return "<c:when test = \"#{" + tag.substring(beginIndex, endIndex) + "}\">";
 	}
 
-	private String forEachTransform(String tag, Stack ends) {
+	private String forEachTransform(String tag, Stack<String> ends) {
 		int beginIndex = tag.indexOf("<") + 1;
 		int endIndex = tag.lastIndexOf(".");
 		addToStack(ends, "\n</c:forEach>\n");
@@ -69,7 +66,7 @@ public class JavaTransformation extends Transformation {
 			}
 		}
 		dom = dom.replace("&gt;", ">").replace("&lt;", "<");
-		Stack ends = new Stack();
+		Stack<String> ends = new Stack<String>();
 		for (String tag : tags) {
 			if (tag.contains("if")) {
 				String jsfTag = "\n<c:choose>\n\t";
@@ -96,7 +93,7 @@ public class JavaTransformation extends Transformation {
 				addToStack(ends, "\n</c:otherwise>\n");
 			}
 		}
-		System.out.println(dom.replace("%>", "").replace("<%", "").replace(">{", ">"));
+//		System.out.println(dom.replace("%>", "").replace("<%", "").replace(">{", ">"));
 //		System.out.println(tags);
 		return dom.replace("%>", ">").replace("<%", "<");
 	}

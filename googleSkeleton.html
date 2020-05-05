@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <title>Google</title>
+  </head>
+  <body>
+    <header>
+      <ul>
+        <li>Gmail</li>
+        <li>Imágenes</li>
+        <li><img src="img/cuadros.png" /></li>
+        <li><img src="img/campana.svg" /></li>
+        <li><img src="img/perfil.jpg" /></li>
+      </ul>
+    </header>
+    <main>
+      <section>
+        <img id='google' src="img/Google.jpg">
+      </section>
+      <section>
+          <input id="search" class="field" type="text" name="name" autofocus="true">
+          <img src="img/google-microfono.jpg" width=25 />
+      </section>
+      <section>
+        <button onclick="redirect()">Buscar en Google</button>
+        <button>Me siento con suerte</button>
+      </section>
+    </main>
+    <footer>
+      <ul>
+        <li>Publicidad</li>
+        <li>Negocios</li>
+        <li>Acerca de</li>
+      </ul>
+      <ul>
+        <li>Privacidad</li>
+        <li>Condiciones</li>
+        <li>Preferencias</li>
+        <li>Utilizar Google.com</li>
+      </ul>
+    </footer>
+    <script>
+      function redirect() {
+        var search = document.getElementById('search');
+        window.location.href = "http://google.com/#q=" + search.value;
+      }
+    </script>
+  </body>
+</html>
