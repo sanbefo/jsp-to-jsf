@@ -22,7 +22,10 @@ public class TableTransformation  extends Transformation {
 	}
 
 	private String replace(String dom, String begin, String end, String tag, String tagEnd) {
-		return dom.replaceFirst(tag, begin + " name = \"" + tag + "\"").replace(tagEnd, end);
+		System.out.println("============================================================");
+		System.out.println(begin);
+		System.out.println(tag);
+		return dom.replaceFirst(tag, begin + " name=\"" + tag + "\"").replace(tagEnd, end);
 	}
 
 	private String changeElement(String dom, String tag, String tagEnd) {
@@ -50,7 +53,7 @@ public class TableTransformation  extends Transformation {
 			String end = (String) json.get(TABLE_END_TAG);
 			Elements tbody = table.getElementsByTag("tbody");
 			int columns = tbody.first().getElementsByTag("tr").first().getElementsByTag("td").size();
-			dom = dom.replaceFirst(TABLE_TAG, begin + " column = \"" + columns + "\"").replace(TABLE_END_TAG, end);
+			dom = dom.replaceFirst(TABLE_TAG, begin + " column=\"" + columns + "\"").replace(TABLE_END_TAG, end);
 
 			dom = changeElement(dom, THEAD_TAG, THEAD_END_TAG);
 			dom = changeElement(dom, TFOOT_TAG, TFOOT_END_TAG);

@@ -17,7 +17,7 @@ public class ATransformation extends Transformation {
 		JSONArray values = (JSONArray) json.get(A_TAG);
 		JSONObject inArray = (JSONObject) values.get(0);
 		String value = (String) inArray.get("href");
-		String img = (String) inArray.get(A_TAG);//tag
+		String tag = (String) inArray.get(A_TAG);
 		Elements tokens = document.getElementsByTag(A_TAG);
 		for (Element token : tokens) {
 			String original = token.toString();
@@ -25,7 +25,7 @@ public class ATransformation extends Transformation {
 			token.attr("outcome", token.text());
 			token.removeAttr("href");
 			token.text("");
-			String jsfTag = token.toString().replaceFirst(A_TAG, img).replace("</a>", "");
+			String jsfTag = token.toString().replaceFirst(A_TAG, tag).replace("</a>", "");
 			dom = dom.replace(original, jsfTag);
 		}
 		return dom;

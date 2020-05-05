@@ -15,8 +15,8 @@ public class JSPtoJSF {
 //	private final static String jspFile = "testFiles/verticalBar.html";
 //	private final static String jspFile = "testFiles/hideMenu.html";
 //	private final static String jspFile = "testFiles/googleSkeleton.html";
-	private final static String jspFile = "testFiles/buttonBar.html";
-//	private final static String jspFile = "testFiles/index.jsp";
+//	private final static String jspFile = "testFiles/buttonBar.html";
+	private final static String jspFile = "testFiles/index.jsp";
 	private final static String dictionaryFile = "dictionary.json";
 
 	public JSPtoJSF() {}
@@ -60,6 +60,7 @@ public class JSPtoJSF {
 //			System.out.println("====================================================================");
 //			System.out.println(dom);
 		}
+		dom = dom.replace("itemlabel", "itemLabel").replace("itemvalue", "itemValue").replace("class", "styleClass");
 		return dom;
 	}
 
