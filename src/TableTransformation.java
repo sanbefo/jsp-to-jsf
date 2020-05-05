@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 import org.json.simple.JSONObject;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -29,7 +31,7 @@ public class TableTransformation  extends Transformation {
 		return replace(dom, begin, end, tag, tagEnd);
 	}
 
-	private String fors(Elements[] groups, String label, String labelEnd, String dom) {
+	private String fors(ArrayList<Elements> groups, String label, String labelEnd, String dom) {
 		for (Elements group : groups) {
 			for (Element body : group) {
 				for (Element td : body.children()) {
@@ -55,16 +57,18 @@ public class TableTransformation  extends Transformation {
 			Elements thead = document.getElementsByTag("thead");
 			Elements tfoot = document.getElementsByTag("tfoot");
 
-			Elements[] groups = {
-				thead.first().getElementsByTag("tr"),
-				tfoot.first().getElementsByTag("tr"),
-				tbody.first().getElementsByTag("tr"),
-			};
+			ArrayList<Elements> groups = new ArrayList<>();
+			groups.add(tbody.first().getElementsByTag("tr"));
+			if (thead.first() != null) {
+				groups.add(thead.first().getElementsByTag("tr"));
+			}
+			if (tfoot.first() != null) {
+				groups.add(tfoot.first().getElementsByTag("tr"));
+			}
 			dom = fors(groups, LABEL_TAG, LABEL_END_TAG, dom);
 		}
 		dom = dom.replace("<tr>", "").replace("</tr>", "").replace("<tbody>", "").replace("</tbody>", "")
-				.replace("<td>", "").replace("</td>", "").replace("\t", "");
-		dom = dom.replaceAll("(?m)^[ \t]*\r?\n", "");
+				.replace("<td>", "").replace("</td>", "").replace("\t", "").replaceAll("(?m)^[ \t]*\r?\n", "");
 		return dom;
 	}
 }

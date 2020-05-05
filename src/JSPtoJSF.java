@@ -12,7 +12,8 @@ import org.jsoup.nodes.Document;
 
 public class JSPtoJSF {
 
-	private final static String jspFile = "googleSkeleton.html";
+	private final static String jspFile = "verticalBar.html";
+//	private final static String jspFile = "googleSkeleton.html";
 //	private final static String jspFile = "index.jsp";
 	private final static String dictionaryFile = "dictionary.json";
 
