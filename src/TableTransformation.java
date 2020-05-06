@@ -48,6 +48,8 @@ public class TableTransformation  extends Transformation {
 
 	public String transform(Document document, String dom) {
 		Elements tables = document.getElementsByTag("table");
+		dom = changeElement(dom, THEAD_TAG, THEAD_END_TAG);
+		dom = changeElement(dom, TFOOT_TAG, TFOOT_END_TAG);
 		for (Element table : tables) {
 			String begin = (String) json.get(TABLE_TAG);
 			String end = (String) json.get(TABLE_END_TAG);
@@ -55,8 +57,6 @@ public class TableTransformation  extends Transformation {
 			int columns = tbody.first().getElementsByTag("tr").first().getElementsByTag("td").size();
 			dom = dom.replaceFirst(TABLE_TAG, begin + " column=\"" + columns + "\"").replace(TABLE_END_TAG, end);
 
-			dom = changeElement(dom, THEAD_TAG, THEAD_END_TAG);
-			dom = changeElement(dom, TFOOT_TAG, TFOOT_END_TAG);
 			Elements thead = document.getElementsByTag("thead");
 			Elements tfoot = document.getElementsByTag("tfoot");
 
