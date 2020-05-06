@@ -90,7 +90,9 @@ public class JavaTransformation extends Transformation {
 	}
 
 	private String cleanDom(String dom) {
-		return dom.replace(">%>", ">").replace("<%<", "<").replace("<<", "<").replace(">>", ">").replace(">{", ">").replace("<%\n", "").replace("; \n", " %>\n");
+		return dom.replace(">%>", ">").replace("<%<", "<").replace("<<", "<")
+				.replace(">>", ">").replace(">{", ">").replace("<%\n", "")
+				.replace("; \n", " %>\n").replace("> %>", ">");
 	}
 
 	public String transform(Document document, String dom) {

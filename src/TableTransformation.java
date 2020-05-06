@@ -43,6 +43,11 @@ public class TableTransformation  extends Transformation {
 		return dom;
 	}
 
+	private String cleanDom(String dom) {
+		return dom.replace("<tr>", "").replace("</tr>", "").replace("<tbody>", "").replace("</tbody>", "")
+				.replace("<td>", "").replace("</td>", "").replace("\t", "").replaceAll("(?m)^[ \t]*\r?\n", "");
+	}
+
 	public String transform(Document document, String dom) {
 		Elements tables = document.getElementsByTag("table");
 		dom = changeElement(dom, THEAD_TAG, THEAD_END_TAG);
@@ -67,8 +72,6 @@ public class TableTransformation  extends Transformation {
 			}
 			dom = fors(groups, LABEL_TAG, LABEL_END_TAG, dom);
 		}
-		dom = dom.replace("<tr>", "").replace("</tr>", "").replace("<tbody>", "").replace("</tbody>", "")
-				.replace("<td>", "").replace("</td>", "").replace("\t", "").replaceAll("(?m)^[ \t]*\r?\n", "");
-		return dom;
+		return cleanDom(dom);
 	}
 }

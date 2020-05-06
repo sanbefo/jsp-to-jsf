@@ -21,7 +21,9 @@ public class ATransformation extends Transformation {
 		Elements tokens = document.getElementsByTag(A_TAG);
 		for (Element token : tokens) {
 			String original = token.toString();
-			token.attr(value, token.attr("href"));
+			String href = token.attr("href").contains("<%=") ? token.attr("href")
+				.substring(token.attr("href").indexOf("<%=") + 3, token.attr("href").indexOf(" %>")).trim() : token.attr("href");
+			token.attr(value, href);
 			token.attr("outcome", token.text());
 			token.removeAttr("href");
 			token.text("");
