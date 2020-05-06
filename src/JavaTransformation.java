@@ -34,17 +34,8 @@ public class JavaTransformation extends Transformation {
 		String var = tag.substring(beginIndex, endIndex).trim();
 		return "<forEach items = \"#{" + var + "} var = \"" + var + "\">";
 	}
-
-	public String transformJSOUP(Document document, String dom) {
-		System.out.println(dom);
-		Pattern pattern = Pattern.compile("&lt;%(.*?)%&gt;", Pattern.DOTALL);
-		Matcher matcher = pattern.matcher(dom);
-		ArrayList<String> matches = new ArrayList<String>();
-		while (matcher.find()) {
-			matches.add(matcher.group(1));
-		}
-		ArrayList<String> tags = new ArrayList<String>();
-
+	
+	private ArrayList<String> collectTags(ArrayList<String> matches, ArrayList<String> tags) {
 		for (String match : matches) {
 			match = match.replace("&gt;", ">").replace("&lt;", "<");
 			if (!match.contains("for")) {
@@ -65,8 +56,10 @@ public class JavaTransformation extends Transformation {
 				tags.add(match);
 			}
 		}
-		dom = dom.replace("&gt;", ">").replace("&lt;", "<");
-		Stack<String> ends = new Stack<String>();
+		return tags;
+	}
+
+	private String replaceTags(ArrayList<String> tags, Stack<String> ends, String dom) {
 		for (String tag : tags) {
 			if (tag.contains("if")) {
 				String jsfTag = "\n<c:choose>\n\t";
@@ -80,7 +73,7 @@ public class JavaTransformation extends Transformation {
 			}
 			if (tag.contains("}")) {
 				if (!ends.empty()) {
-					if (ends.peek().toString() == "\n</c:otherwise>\n") {
+					if (ends.peek().toString().equals("\n</c:otherwise>\n")) {
 						dom = dom.replaceFirst(" } ", ends.pop().toString() + ends.pop().toString());
 					} else {
 						dom = dom.replaceFirst(" } ", ends.pop().toString());
@@ -93,8 +86,27 @@ public class JavaTransformation extends Transformation {
 				addToStack(ends, "\n</c:otherwise>\n");
 			}
 		}
-//		System.out.println(dom.replace("%>", "").replace("<%", "").replace(">{", ">"));
+		return dom;
+	}
+
+	private String cleanDom(String dom) {
+		return dom.replace("%>", ">").replace("<%", "<").replace("<<", "<").replace(">>", ">").replace(">{", ">");
+	}
+
+	public String transform(Document document, String dom) {
+		Pattern pattern = Pattern.compile("&lt;%(.*?)%&gt;", Pattern.DOTALL);
+		Matcher matcher = pattern.matcher(dom);
+		ArrayList<String> matches = new ArrayList<String>();
+		while (matcher.find()) {
+			matches.add(matcher.group(1));
+		}
+		ArrayList<String> tags = new ArrayList<String>();
+
+		tags = collectTags(matches, tags);
+		dom = dom.replace("&gt;", ">").replace("&lt;", "<");
+		Stack<String> ends = new Stack<String>();
+		dom = replaceTags(tags, ends, dom);
 //		System.out.println(tags);
-		return dom.replace("%>", ">").replace("<%", "<");
+		return cleanDom(dom);
 	}
 }

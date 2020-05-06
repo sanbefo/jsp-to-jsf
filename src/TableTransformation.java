@@ -22,9 +22,6 @@ public class TableTransformation  extends Transformation {
 	}
 
 	private String replace(String dom, String begin, String end, String tag, String tagEnd) {
-		System.out.println("============================================================");
-		System.out.println(begin);
-		System.out.println(tag);
 		return dom.replaceFirst(tag, begin + " name=\"" + tag + "\"").replace(tagEnd, end);
 	}
 
