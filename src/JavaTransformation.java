@@ -24,15 +24,16 @@ public class JavaTransformation extends Transformation {
 		int beginIndex = tag.indexOf("(") + 1;
 		int endIndex = tag.lastIndexOf(")");
 		addToStack(ends, "\n</c:when>\n");
-		return "<c:when test = \"#{" + tag.substring(beginIndex, endIndex) + "}\">";
+		return "<c:when test=\"#{" + tag.substring(beginIndex, endIndex) + "}\">";
 	}
 
-	private String forEachTransform(String tag, Stack<String> ends) {
+	private String forEachTransform(String tag, Stack<String> ends, String dom) {
 		int beginIndex = tag.indexOf("<") + 1;
 		int endIndex = tag.lastIndexOf(".");
-		addToStack(ends, "\n</c:forEach>\n");
+		addToStack(ends, "</c:forEach>");
 		String var = tag.substring(beginIndex, endIndex).trim();
-		return "<forEach items = \"#{" + var + "} var = \"" + var + "\">";
+		String jsfTag = "<forEach items=\"#{" + var + "} var=\"" + var + "_elem\">";
+		return dom.replace(tag, jsfTag).replace(var, var + "_elem");
 	}
 	
 	private ArrayList<String> collectTags(ArrayList<String> matches, ArrayList<String> tags) {
@@ -68,8 +69,7 @@ public class JavaTransformation extends Transformation {
 				dom = dom.replace(tag, jsfTag);
 			}
 			if (tag.contains("for")) {
-				String jsfTag = forEachTransform(tag, ends);
-				dom = dom.replace(tag, jsfTag);
+				dom = forEachTransform(tag, ends, dom);
 			}
 			if (tag.contains("}")) {
 				if (!ends.empty()) {
@@ -90,7 +90,7 @@ public class JavaTransformation extends Transformation {
 	}
 
 	private String cleanDom(String dom) {
-		return dom.replace("%>", ">").replace("<%", "<").replace("<<", "<").replace(">>", ">").replace(">{", ">");
+		return dom.replace(">%>", ">").replace("<%<", "<").replace("<<", "<").replace(">>", ">").replace(">{", ">").replace("<%\n", "").replace("; \n", " %>\n");
 	}
 
 	public String transform(Document document, String dom) {
