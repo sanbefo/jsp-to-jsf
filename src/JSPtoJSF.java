@@ -71,7 +71,6 @@ public class JSPtoJSF {
 			Reader dictionary = new FileReader(dictionaryFile);
 			JSONObject json = (JSONObject) parser.parse(dictionary);
 			File fileInput = new File(jspFile);
-
 			String res = domJsoup(json, fileInput);
 
 			System.out.println(res);

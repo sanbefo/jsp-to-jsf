@@ -87,7 +87,9 @@
 					<td>${allFestivals.get(i).getFestivalName()}</td>
 					<td>${allFestivals.get(i).getLocation()}</td>
 					<td>${allFestivals.get(i).getStartDate()}</td>
-					<td>${allFestivals.get(i).getEndDate()}</td>
+					<% if (1 > 2) { %>
+						<td>${allFestivals.get(i).getEndDate()}</td>
+					<% } %>
 					<td>${allFestivals.get(i).getURL()}</td>
 				</tr>
 			<% } %>
