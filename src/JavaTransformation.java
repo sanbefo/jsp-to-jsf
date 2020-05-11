@@ -12,7 +12,14 @@ import java.util.Stack;
 
 public class JavaTransformation extends Transformation {
 	private JSONObject json;
+	private final static String[][] REPLACERS = {{">%>", ">"},
+			{"<%<", "<"}, {"<<", "<"}, {">>", ">"}, {">{", ">"},
+			{"<%\n", ""}, {"; \n", " %>\n"}, {"> %>", ">"}, {"()}", "}"}};
 
+//	replace(">%>", ">").replace("<%<", "<").replace("<<", "<").replace(">>", ">")
+//	.replace(">{", ">").replace("<%\n", "").replace("; \n", " %>\n").replace("> %>", ">")
+//	.replace("()}", "}")
+	
 	public JavaTransformation(JSONObject json) {
 		this.json = json;
 	}
@@ -99,9 +106,10 @@ public class JavaTransformation extends Transformation {
 	}
 
 	private String cleanDom(String dom) {
-		return dom.replace(">%>", ">").replace("<%<", "<").replace("<<", "<").replace(">>", ">")
-				.replace(">{", ">").replace("<%\n", "").replace("; \n", " %>\n").replace("> %>", ">")
-				.replace("()}", "}");
+		for (int i = 0; i < REPLACERS.length; i++) {
+			dom = dom.replace(REPLACERS[i][0], REPLACERS[i][1]);
+		}
+		return dom;
 	}
 
 	public String transform(Document document, String dom) {
