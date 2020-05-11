@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -56,8 +57,18 @@ public class JavaTransformation extends Transformation {
 		return tags;
 	}
 
+	private boolean containsTag(List<String> list, String pattern) {
+		for (String tag : list) {
+			if (tag.contains(pattern)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	private String replaceTags(ArrayList<String> tags, Stack<String> ends, String dom) {
 		for (int i = 0; i < tags.size(); i++) {
+			System.out.println(tags.get(i));
 			if (tags.get(i).contains("if")) {
 				String jsfTag = "\n<c:choose>\n\t";
 				addToStack(ends, "</c:choose>");
@@ -69,18 +80,14 @@ public class JavaTransformation extends Transformation {
 			}
 			if (tags.get(i).contains("}")) {
 				if (!ends.empty()) {
-//					System.out.println("=====================");
-//					System.out.println(i);
-					if (ends.peek().toString().equals("\n</c:otherwise>\n")) {
+					if (ends.peek().toString().equals("\n</c:when>\n") && !containsTag(tags.subList(i, tags.size()), "if")) {
 						dom = dom.replaceFirst(" } ", ends.pop().toString() + ends.pop().toString());
-//					}
-//					if (ends.size() == 2 && i == (tags.size() - 1)) {
-//						System.out.println("ENTRAMOS");
-//						dom = dom.replaceFirst(" } ", ends.pop().toString() + ends.pop().toString());
+					} else if (ends.peek().toString().equals("\n</c:otherwise>\n") || (ends.size() == 2 && i == (tags.size() - 1))) {
+						dom = dom.replaceFirst(" } ", ends.pop().toString() + ends.pop().toString());
 					} else {
 						dom = dom.replaceFirst(" } ", ends.pop().toString());
 					}
-				}
+ 				}
 			}
 			if (tags.get(i).contains("else {")) {
 				String tag = tags.get(i).replace("{", "");
@@ -92,9 +99,9 @@ public class JavaTransformation extends Transformation {
 	}
 
 	private String cleanDom(String dom) {
-		return dom.replace(">%>", ">").replace("<%<", "<").replace("<<", "<")
-				.replace(">>", ">").replace(">{", ">").replace("<%\n", "")
-				.replace("; \n", " %>\n").replace("> %>", ">");
+		return dom.replace(">%>", ">").replace("<%<", "<").replace("<<", "<").replace(">>", ">")
+				.replace(">{", ">").replace("<%\n", "").replace("; \n", " %>\n").replace("> %>", ">")
+				.replace("()}", "}");
 	}
 
 	public String transform(Document document, String dom) {
