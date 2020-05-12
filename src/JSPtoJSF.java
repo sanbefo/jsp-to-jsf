@@ -49,7 +49,7 @@ public class JSPtoJSF {
 			new TableTransformation(json),
 			new SimpleTransformation(json),
 			new JavaTransformation(json),
-//			new JSPTransformation(json),
+			new JSPTransformation(json),
 		};
 		String dom = document.toString();
 

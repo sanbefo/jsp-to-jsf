@@ -15,10 +15,6 @@ public class JavaTransformation extends Transformation {
 	private final static String[][] REPLACERS = {{">%>", ">"},
 			{"<%<", "<"}, {"<<", "<"}, {">>", ">"}, {">{", ">"},
 			{"<%\n", ""}, {"; \n", " %>\n"}, {"> %>", ">"}, {"()}", "}"}};
-
-//	replace(">%>", ">").replace("<%<", "<").replace("<<", "<").replace(">>", ">")
-//	.replace(">{", ">").replace("<%\n", "").replace("; \n", " %>\n").replace("> %>", ">")
-//	.replace("()}", "}")
 	
 	public JavaTransformation(JSONObject json) {
 		this.json = json;
