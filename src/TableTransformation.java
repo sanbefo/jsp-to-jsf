@@ -7,14 +7,18 @@ import org.jsoup.select.Elements;
 
 public class TableTransformation  extends Transformation {
 
+	private final static String TD_TAG = "td";
+	private final static String TR_TAG = "tr";
 	private final static String TABLE_TAG = "table";
-	private final static String TABLE_END_TAG = "/table";
+	private final static String TABLE_END_TAG = "</table>";
 	private final static String THEAD_TAG = "thead";
-	private final static String THEAD_END_TAG = "/thead";
+	private final static String THEAD_END_TAG = "</thead>";
+	private final static String TBODY_TAG = "tbody";
+	private final static String TBODY_END_TAG = "</tbody>";
 	private final static String TFOOT_TAG = "tfoot";
-	private final static String TFOOT_END_TAG = "/tfoot";
-	private final static String LABEL_TAG = "label";
-	private final static String LABEL_END_TAG = "/label";
+	private final static String TFOOT_END_TAG = "</tfoot>";
+	private final static String LABEL_TAG = "<label>";
+	private final static String LABEL_END_TAG = "</label>";
 	private JSONObject json;
 
 	public TableTransformation(JSONObject json) {
@@ -35,7 +39,7 @@ public class TableTransformation  extends Transformation {
 		for (Elements group : groups) {
 			for (Element body : group) {
 				for (Element td : body.children()) {
-					String jsfTrHead = "<" + label + ">" + td.text() + "<" + labelEnd + ">";
+					String jsfTrHead = label + td.text() + labelEnd;
 					dom = dom.replace(td.toString(), jsfTrHead);
 				}
 			}
@@ -44,31 +48,31 @@ public class TableTransformation  extends Transformation {
 	}
 
 	private String cleanDom(String dom) {
-		return dom.replace("<tr>", "").replace("</tr>", "").replace("<tbody>", "").replace("</tbody>", "")
+		return dom.replace("<tr>", "").replace("</tr>", "").replace("<tbody>", "").replace(TBODY_END_TAG, "")
 				.replace("<td>", "").replace("</td>", "").replace("\t", "").replaceAll("(?m)^[ \t]*\r?\n", "");
 	}
 
 	public String transform(Document document, String dom) {
-		Elements tables = document.getElementsByTag("table");
+		Elements tables = document.getElementsByTag(TABLE_TAG);
 		dom = changeElement(dom, THEAD_TAG, THEAD_END_TAG);
 		dom = changeElement(dom, TFOOT_TAG, TFOOT_END_TAG);
 		for (Element table : tables) {
 			String begin = (String) json.get(TABLE_TAG);
 			String end = (String) json.get(TABLE_END_TAG);
-			Elements tbody = table.getElementsByTag("tbody");
-			int columns = tbody.first().getElementsByTag("tr").first().getElementsByTag("td").size();
+			Elements tbody = table.getElementsByTag(TBODY_TAG);
+			int columns = tbody.first().getElementsByTag(TR_TAG).first().getElementsByTag(TD_TAG).size();
 			dom = dom.replaceFirst(TABLE_TAG, begin + " column=\"" + columns + "\"").replace(TABLE_END_TAG, end);
 
-			Elements thead = document.getElementsByTag("thead");
-			Elements tfoot = document.getElementsByTag("tfoot");
+			Elements thead = document.getElementsByTag(THEAD_TAG);
+			Elements tfoot = document.getElementsByTag(TFOOT_TAG);
 
 			ArrayList<Elements> groups = new ArrayList<>();
-			groups.add(tbody.first().getElementsByTag("tr"));
+			groups.add(tbody.first().getElementsByTag(TR_TAG));
 			if (thead.first() != null) {
-				groups.add(thead.first().getElementsByTag("tr"));
+				groups.add(thead.first().getElementsByTag(TR_TAG));
 			}
 			if (tfoot.first() != null) {
-				groups.add(tfoot.first().getElementsByTag("tr"));
+				groups.add(tfoot.first().getElementsByTag(TR_TAG));
 			}
 			dom = fors(groups, LABEL_TAG, LABEL_END_TAG, dom);
 		}

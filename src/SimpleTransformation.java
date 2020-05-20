@@ -15,7 +15,7 @@ public class SimpleTransformation extends Transformation {
 	private final static String SPAN_END_TAG = "/span";
 	private final static String SELECT_TAG = "select";
 	private final static String SELECT_END_TAG = "/select";
-	private final static String[] properties = { BODY_TAG, BODY_END_TAG, HEAD_TAG,
+	private final static String[] PROPERTIES = { BODY_TAG, BODY_END_TAG, HEAD_TAG,
 			HEAD_END_TAG, LABEL_TAG, LABEL_END_TAG, DIV_TAG, DIV_END_TAG, SPAN_TAG,
 			SPAN_END_TAG, SELECT_TAG, SELECT_END_TAG };
 
@@ -24,7 +24,7 @@ public class SimpleTransformation extends Transformation {
 	}
 
 	public String transform(Document document, String dom) {
-		for (String property : properties) {
+		for (String property : PROPERTIES) {
 			String tag = (String) json.get(property);
 			dom = dom.replace("<" + property, "\n<" + tag);
 		}

@@ -1,7 +1,9 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.io.Reader;
 
 import org.json.simple.JSONObject;
@@ -12,25 +14,37 @@ import org.jsoup.nodes.Document;
 
 public class JSPtoJSF {
 
-//	private final static String jspFile = "testFiles/verticalBar.html";
-//	private final static String jspFile = "testFiles/hideMenu.html";
-//	private final static String jspFile = "testFiles/googleSkeleton.html";
-//	private final static String jspFile = "testFiles/buttonBar.html";
-	private final static String jspFile = "testFiles/index.jsp";
-	private final static String dictionaryFile = "dictionary.json";
+	private final static String VERTICAL_BAR_FILE = "testFiles/verticalBar.html";
+	private final static String HIDE_MENU_FILE = "testFiles/hideMenu.html";
+	private final static String GOOGLE_SKELETON_FILE = "testFiles/googleSkeleton.html";
+	private final static String BUTTON_BAR_FILE = "testFiles/buttonBar.html";
+	private final static String INDEX_FILE = "testFiles/index.jsp";
+	private final static String CHECKOUT_FILE = "testFiles/checkout.jsp";
+	private final static String BOOK_SHOP_FILE = "testFiles/bookShopHome.jsp";
+	private final static String JSTL_FILE = "testFiles/req_params_jstl.jsp";
+	private final static String JSON_FILE = "dictionary.json";
+	private final static String XHTML_EXTENSION = "xhtml";
+	private final static String FOLDER_NAME = "transformedFiles/";
+	private final static String[] FILES = { VERTICAL_BAR_FILE, HIDE_MENU_FILE,
+			GOOGLE_SKELETON_FILE, BUTTON_BAR_FILE, INDEX_FILE, JSTL_FILE,
+			CHECKOUT_FILE };
 
 	public JSPtoJSF() {}
 
-	public static File changeExtension(File f, String newExtension) {
-		int i = f.getName().lastIndexOf('.');
-		String name = f.getName().substring(0, i);
-		return new File(name + newExtension);
+	public static String changeExtension(File file, String newExtension) {
+		int i = file.getName().lastIndexOf('.');
+		String name = file.getName().substring(0, i);
+		return name + "." + newExtension;
 	}
 
 	public static void message(String message) {
 		System.out.println("===============================================");
 		System.out.println("||                 " + message + "                  ||");
 		System.out.println("===============================================");
+	}
+
+	public static String customUpperCase(String dom) {
+		return dom.replace("itemlabel", "itemLabel").replace("itemvalue", "itemValue").replace("class", "styleClass");
 	}
 
 	public static String domJsoup(JSONObject json, File fileInput) throws IOException {
@@ -46,21 +60,17 @@ public class JSPtoJSF {
 			new ATransformation(json),
 			new ImageTransformation(json),
 			new ButtonTransformation(json),
-			new TableTransformation(json),
+//			new TableTransformation(json),
 			new SimpleTransformation(json),
 			new JavaTransformation(json),
 			new JSPTransformation(json),
 		};
 		String dom = document.toString();
 
-//		System.out.println(dom);
-
 		for (Transformation transformer : transformers) {
 			dom = transformer.transform(document, dom);
-//			System.out.println("====================================================================");
-//			System.out.println(dom);
 		}
-		dom = dom.replace("itemlabel", "itemLabel").replace("itemvalue", "itemValue").replace("class", "styleClass");
+		dom = customUpperCase(dom);
 		return dom;
 	}
 
@@ -68,12 +78,18 @@ public class JSPtoJSF {
 		message("START!!!");
 		JSONParser parser = new JSONParser();
 		try {
-			Reader dictionary = new FileReader(dictionaryFile);
-			JSONObject json = (JSONObject) parser.parse(dictionary);
-			File fileInput = new File(jspFile);
-			String res = domJsoup(json, fileInput);
-
-			System.out.println(res);
+			for (String filename : FILES) {
+				Reader dictionary = new FileReader(JSON_FILE);
+				JSONObject json = (JSONObject) parser.parse(dictionary);
+				File file = new File(filename);
+				String res = domJsoup(json, file);
+				File folder = new File(FOLDER_NAME);
+		        folder.mkdirs();
+				FileOutputStream name = new FileOutputStream(FOLDER_NAME + changeExtension(file, XHTML_EXTENSION));
+				PrintStream out = new PrintStream(name);
+				out.print(res);
+				out.close();
+			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}

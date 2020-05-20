@@ -71,7 +71,6 @@ public class JavaTransformation extends Transformation {
 
 	private String replaceTags(ArrayList<String> tags, Stack<String> ends, String dom) {
 		for (int i = 0; i < tags.size(); i++) {
-			System.out.println(tags.get(i));
 			if (tags.get(i).contains("if")) {
 				String jsfTag = "\n<c:choose>\n\t";
 				addToStack(ends, "</c:choose>");
@@ -121,7 +120,6 @@ public class JavaTransformation extends Transformation {
 		dom = dom.replace("&gt;", ">").replace("&lt;", "<");
 		Stack<String> ends = new Stack<String>();
 		dom = replaceTags(tags, ends, dom);
-		System.out.println(tags.size());
 		return cleanDom(dom);
 	}
 }

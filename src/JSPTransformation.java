@@ -4,9 +4,9 @@ import org.jsoup.nodes.Document;
 public class JSPTransformation extends Transformation {
 
 	private JSONObject json;
-	private final static String[] IGNORE_CORE = { "c:catch", "c:choose", "c:forEach",
-			"c:forTokens", "c:if", "c:import", "c:otherwise", "c:out", "c:param",
-			"c:redirect", "c:remove", "c:set", "c:when" };
+	private final static String[] IGNORE_CORE = { "c:catch", "c:choose", "c:forEach", "c:forTokens",
+			"c:if", "c:import", "c:otherwise", "c:out", "c:param", "c:redirect", "c:remove", "c:set",
+			"c:when" };
 
 	private final static String[] IGNORE_i18n = { "fmt:bundle", "fmt:formatDate", "fmt:formatNumber",
 			"fmt:message", "fmt:param", "fmt:parseDate", "fmt:parseNumber", "fmt:requestEncoding",
@@ -17,8 +17,8 @@ public class JSPTransformation extends Transformation {
 			"fn:split", "fn:startsWith", "fn:substring", "fn:substringAfter", "fn:substringBefore",
 			"fn:toLowerCase", "fn:toUpperCase", "fn:trim" };
 
-	private final static String[] IGNORE_DATABASE = { "sql:dateParam", "sql:param",
-			"sql:query", "sql:setDataSource", "sql:transaction", "sql:update" };
+	private final static String[] IGNORE_DATABASE = { "sql:dateParam", "sql:param", "sql:query",
+			"sql:setDataSource", "sql:transaction", "sql:update" };
 
 	public JSPTransformation(JSONObject json) {
 		this.json = json;
@@ -28,5 +28,3 @@ public class JSPTransformation extends Transformation {
 		return dom;
 	}
 }
-
-
