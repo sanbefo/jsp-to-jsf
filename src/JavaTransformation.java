@@ -14,7 +14,8 @@ public class JavaTransformation extends Transformation {
 	private JSONObject json;
 	private final static String[][] REPLACERS = {{">%>", ">"},
 			{"<%<", "<"}, {"<<", "<"}, {">>", ">"}, {">{", ">"},
-			{"<%\n", ""}, {"; \n", " %>\n"}, {"> %>", ">"}, {"()}", "}"}};
+			{"<%\n", ""}, {"; \n", " %>\n"}, {"> %>", ">"}, {"()}", "}"},
+			{"<>", ""}};
 	
 	public JavaTransformation(JSONObject json) {
 		this.json = json;

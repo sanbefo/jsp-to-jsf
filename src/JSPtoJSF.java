@@ -60,7 +60,7 @@ public class JSPtoJSF {
 			new ATransformation(json),
 			new ImageTransformation(json),
 			new ButtonTransformation(json),
-//			new TableTransformation(json),
+			new TableTransformation(json),
 			new SimpleTransformation(json),
 			new JavaTransformation(json),
 			new JSPTransformation(json),
