@@ -26,7 +26,7 @@ public class JSPtoJSF {
 	private final static String JSON_FILE = "dictionary.json";
 	private final static String TXT_EXTENSION = "txt";
 	private final static String XHTML_EXTENSION = "xhtml";
-	private final static String NOTES_FOLDER = "notes/";
+	private final static String NOTES_FOLDER = "notesFiles/";
 	private final static String TRANSFORMATIONS_FOLDER = "transformedFiles/";
 	private final static String[][] REPLACERS = { { "itemlabel", "itemLabel" },
 			{ "itemvalue", "itemValue" }, { "class", "styleClass" } };	
@@ -86,6 +86,7 @@ public class JSPtoJSF {
 		out.println("=====================================================================================================");
 		out.println("Warning notes and recommendations for the file " + filename);
 		out.println("=====================================================================================================");
+		out.println("Check the tabulations and linebreakes for better readability\n");
 
 		for (Transformation transformer : transformers) {
 			dom = transformer.transform(document, dom);

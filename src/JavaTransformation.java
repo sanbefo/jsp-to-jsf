@@ -12,6 +12,7 @@ import java.util.Stack;
 
 public class JavaTransformation extends Transformation {
 	private JSONObject json;
+	private boolean flag;
 	private final static String[][] REPLACERS = { { ">%>", ">" },
 			{ "<%<", "<" }, { "<<", "<" }, { ">>", ">" }, { ">{", ">" },
 			{ "<%\n", "" }, { "; \n", " %>\n" }, { "> %>", ">" }, { "()}", "}" },
@@ -19,6 +20,15 @@ public class JavaTransformation extends Transformation {
 	
 	public JavaTransformation(JSONObject json) {
 		this.json = json;
+		this.flag = false;
+	}
+
+	public boolean getFlag() {
+	    return flag;
+	}
+
+	public void setFlag(boolean flag) {
+	    this.flag = flag;
 	}
 
 	private void addToStack(Stack<String> ends, String end) {
@@ -122,5 +132,12 @@ public class JavaTransformation extends Transformation {
 		Stack<String> ends = new Stack<String>();
 		dom = replaceTags(tags, ends, dom);
 		return cleanDom(dom);
+	}
+
+	public String notes() {
+		return "-- Java Tag Notes --\n"
+				+ "Check that there are no curly braces wandering around in the file ({}) in the file\n"
+				+ "Check the foreach variables and methods so they match the model being used\n"
+				+ "Check closing tags for every instruction\n";
 	}
 }
