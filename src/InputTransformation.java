@@ -47,4 +47,10 @@ public class InputTransformation extends Transformation {
 		}
 		return dom;
 	}
+
+	public String notes() {
+		return "-- Input Tag Notes --\n"
+				+ "Check that there are no input tags in the file\n"
+				+ "Check that there are no empty attributes in any of the following tags: h:inputText, h:commandButton, h:selectOneRadio, h:inputSecret, h:inputHidden, h:selectBooleanCheckbox\n";
+	}
 }

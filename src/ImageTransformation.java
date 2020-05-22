@@ -42,4 +42,10 @@ public class ImageTransformation extends Transformation {
 		}
 		return dom;
 	}
+
+	public String notes() {
+		return "-- Image Tag Notes --\n"
+				+ "Check that there are no img tags in the file\n"
+				+ "Check that there are no empty attributes in the h:graphicImage tag\n";
+	}
 }

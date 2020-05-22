@@ -7,6 +7,8 @@ import org.jsoup.select.Elements;
 public class ButtonTransformation extends Transformation {
 
 	private final static String BUTTON_TAG = "button";
+	private final static String TYPE_ATTR = "type";
+	private final static String VALUE_ATTR = "value";
 	private boolean flag;
 	private JSONObject json;
 
@@ -32,8 +34,8 @@ public class ButtonTransformation extends Transformation {
 			setFlag(true);
 			for (Element token : tokens) {
 				String original = token.toString();
-				token.attr("value", token.text());
-				token.removeAttr("type");
+				token.attr(VALUE_ATTR, token.text());
+				token.removeAttr(TYPE_ATTR);
 				token.text("");
 				String jsfTag = token.toString().replace("</button>", "")
 						.replaceFirst(BUTTON_TAG, button).replace(">", " />\n");
@@ -41,5 +43,11 @@ public class ButtonTransformation extends Transformation {
 			}
 		}
 		return dom;
+	}
+
+	public String notes() {
+		return "-- Button Tag Notes --\n"
+				+ "Check that there are no button tags in the file\n"
+				+ "Check that there are no empty attributes in the h:commandButton tag\n";
 	}
 }

@@ -42,9 +42,7 @@ public class LinkTransformation extends Transformation {
 				String nameAttr = token.attr(HREF_ATTR);
 				token.attr(library, CSS_LIBRARY);
 				token.attr(name, nameAttr);
-				token.removeAttr(REL_ATTR);
-				token.removeAttr(TYPE_ATTR);
-				token.removeAttr(HREF_ATTR);
+				token.removeAttr(REL_ATTR).removeAttr(TYPE_ATTR).removeAttr(HREF_ATTR);;
 				token.text("");
 				String jsfTag = token.toString().replaceFirst(LINK_TAG, tag);
 				dom = dom.replace(original, jsfTag);
@@ -52,5 +50,12 @@ public class LinkTransformation extends Transformation {
 		}
 		dom = dom.replace(LINK_END_TAG, "");
 		return dom;
+	}
+
+	public String notes() {
+		return "-- Link Tag Notes --\n"
+				+ "Check that there are no link tags in the file\n"
+				+ "Check that there are no empty attributes in the h:outputStylesheet tag\n"
+				+ "Check that both library and name attributes have coherent values\n";
 	}
 }

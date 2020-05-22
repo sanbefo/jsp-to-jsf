@@ -52,4 +52,11 @@ public class ScriptTransformation extends Transformation {
 		dom = dom.replace(SCRIPT_END_TAG, "");
 		return dom;
 	}
+
+	public String notes() {
+		return "-- Script Tag Notes --\n"
+				+ "Check that there are no script tags in the file\n"
+				+ "Check that there are no empty attributes in the h:outputScript tag\n"
+				+ "Check that both library and name attributes have coherent values\n";
+	}
 }

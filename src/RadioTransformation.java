@@ -46,14 +46,19 @@ public class RadioTransformation extends Transformation {
 				dom = dom.replace(labelTag.toString(), "");
 				radio.attr(label, labelTag.text());
 				radio.attr(value, radio.attr(VALUE_ATTR));
-				radio.removeAttr(ID_ATTR);
-				radio.removeAttr(TYPE_ATTR);
-				radio.removeAttr(VALUE_ATTR);
-				radio.removeAttr(NAME_ATTR);
+				radio.removeAttr(ID_ATTR).removeAttr(TYPE_ATTR).removeAttr(VALUE_ATTR).removeAttr(NAME_ATTR);
 				String jsfTag = radio.toString().replaceFirst(INPUT_TAG, radioTag).replace(">", " />");
 				dom = dom.replace(original, jsfTag);
 			}
 		}
 		return dom;
+	}
+
+	public String notes() {
+		return "-- Radio Tag Notes --\n"
+				+ "Check that there are no radio tags in the file\n"
+				+ "Check that there are no empty attributes in the f:selectItem tag\n"
+				+ "Check there are no <label></label> tags surrounding the f:selectItem tags\n"
+				+ "Check the itemValue attribute and the itemLabel value\n";
 	}
 }

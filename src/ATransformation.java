@@ -45,4 +45,11 @@ public class ATransformation extends Transformation {
 		}
 		return dom;
 	}
+
+	public String notes() {
+		return "-- A Tag Notes --\n"
+				+ "Check that there are no a tags in the file\n"
+				+ "Check that there are no empty attributes in the h:outputLink tag\n"
+				+ "Check the outcome attribute because it should contain the text in the link\n";
+	}
 }

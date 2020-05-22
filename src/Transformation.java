@@ -15,4 +15,8 @@ public class Transformation {
 	public String transform(Document document, String dom) {
 		return dom;
 	}
+
+	public String notes() {
+		return "";
+	}
 }

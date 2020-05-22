@@ -47,4 +47,10 @@ public class OptionTransformation extends Transformation {
 		dom = dom.replaceAll("(?m)^[ \t]*\r?\n", "");
 		return dom;
 	}
+
+	public String notes() {
+		return "-- Option Tag Notes --\n"
+				+ "Check that there are no option tags in the file\n"
+				+ "Check that there are no empty attributes in the f:selectItem tag\n";
+	}
 }

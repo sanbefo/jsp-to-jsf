@@ -96,4 +96,10 @@ public class TableTransformation  extends Transformation {
 		}
 		return cleanDom(dom);
 	}
+
+	public String notes() {
+		return "-- Table Tag Notes --\n"
+				+ "Check that there are no table, tbody, thead, tfoot, tr or td tags in the file\n"
+				+ "Check that there are no empty attributes in the h:panelGrid or f:facet tags\n";
+	}
 }

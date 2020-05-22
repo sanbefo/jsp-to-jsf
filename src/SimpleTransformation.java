@@ -39,7 +39,6 @@ public class SimpleTransformation extends Transformation {
 			String tag = (String) json.get(property);
 			dom = dom.replace("<" + property, "\n<" + tag);
 		}
-		dom = dom.replaceAll("(?m)^[ \t]*\r?\n", "");
-		return dom;
+		return dom.replaceAll("(?m)^[ \t]*\r?\n", "");
 	}
 }

@@ -80,11 +80,17 @@ public class JSPtoJSF {
 
 		FileOutputStream name = new FileOutputStream(NOTES_FOLDER + changeExtension(file, TXT_EXTENSION));
 		PrintStream out = new PrintStream(name);
+		int i = file.getName().lastIndexOf('.');
+		String filename = file.getName().substring(0, i);
+
+		out.println("=====================================================================================================");
+		out.println("Warning notes and recommendations for the file " + filename);
+		out.println("=====================================================================================================");
 
 		for (Transformation transformer : transformers) {
 			dom = transformer.transform(document, dom);
 			if (transformer.getFlag()) {
-				out.print("asdf");
+				out.println(transformer.notes());
 			}
 		}
 		out.close();
