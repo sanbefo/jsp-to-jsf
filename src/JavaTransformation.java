@@ -12,10 +12,10 @@ import java.util.Stack;
 
 public class JavaTransformation extends Transformation {
 	private JSONObject json;
-	private final static String[][] REPLACERS = {{">%>", ">"},
-			{"<%<", "<"}, {"<<", "<"}, {">>", ">"}, {">{", ">"},
-			{"<%\n", ""}, {"; \n", " %>\n"}, {"> %>", ">"}, {"()}", "}"},
-			{"<>", ""}};
+	private final static String[][] REPLACERS = { { ">%>", ">" },
+			{ "<%<", "<" }, { "<<", "<" }, { ">>", ">" }, { ">{", ">" },
+			{ "<%\n", "" }, { "; \n", " %>\n" }, { "> %>", ">" }, { "()}", "}" },
+			{ "<>", "" } };
 	
 	public JavaTransformation(JSONObject json) {
 		this.json = json;

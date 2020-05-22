@@ -24,7 +24,7 @@ public class JSPTransformation extends Transformation {
 		this.json = json;
 	}
 
-	public String transform(Document document, String dom) {
+	public String transform(Document document, String dom, Boolean flag) {
 		return dom;
 	}
 }

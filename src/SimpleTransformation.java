@@ -2,7 +2,9 @@ import org.json.simple.JSONObject;
 import org.jsoup.nodes.Document;
 
 public class SimpleTransformation extends Transformation {
+
 	private JSONObject json;
+	private boolean flag;
 	private final static String BODY_TAG = "body";
 	private final static String BODY_END_TAG = "/body";
 	private final static String HEAD_TAG = "head";
@@ -21,6 +23,15 @@ public class SimpleTransformation extends Transformation {
 
 	public SimpleTransformation(JSONObject json) {
 		this.json = json;
+		this.flag = false;
+	}
+
+	public boolean getFlag() {
+	    return flag;
+	}
+
+	public void setFlag(boolean flag) {
+	    this.flag = flag;
 	}
 
 	public String transform(Document document, String dom) {

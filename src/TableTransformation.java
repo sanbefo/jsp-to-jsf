@@ -18,6 +18,7 @@ public class TableTransformation  extends Transformation {
 	private final static String TFOOT_TAG = "tfoot";
 	private final static String TFOOT_END_TAG = "/tfoot";
 	private final static String LABEL_TAG = "<label>";
+	private boolean flag;
 	private final static String LABEL_END_TAG = "</label>";
 	private final static String[] REPLACERS = { "<tr>", "</tr>",
 			"<tbody>", "</tbody>", "<td>", "</td>", "(?m)^[ \\t]*\\r?\\n" };
@@ -26,6 +27,15 @@ public class TableTransformation  extends Transformation {
 
 	public TableTransformation(JSONObject json) {
 		this.json = json;
+		this.flag = false;
+	}
+
+	public boolean getFlag() {
+	    return flag;
+	}
+
+	public void setFlag(boolean flag) {
+	    this.flag = flag;
 	}
 
 	private String customReplace(String dom, String begin, String end, String tag, String tagEnd) {
@@ -61,25 +71,28 @@ public class TableTransformation  extends Transformation {
 		Elements tables = document.getElementsByTag(TABLE_TAG);
 		dom = changeElement(dom, THEAD_TAG, THEAD_END_TAG);
 		dom = changeElement(dom, TFOOT_TAG, TFOOT_END_TAG);
-		for (Element table : tables) {
-			String begin = (String) json.get(TABLE_TAG);
-			String end = (String) json.get(TABLE_END_TAG);
-			Elements tbody = table.getElementsByTag(TBODY_TAG);
-			int columns = tbody.first().getElementsByTag(TR_TAG).first().getElementsByTag(TD_TAG).size();
-			dom = dom.replaceFirst(TABLE_TAG, begin + " column=\"" + columns + "\"").replace(TABLE_END_TAG, end);
-
-			Elements thead = document.getElementsByTag(THEAD_TAG);
-			Elements tfoot = document.getElementsByTag(TFOOT_TAG);
-
-			ArrayList<Elements> groups = new ArrayList<>();
-			groups.add(tbody.first().getElementsByTag(TR_TAG));
-			if (thead.first() != null) {
-				groups.add(thead.first().getElementsByTag(TR_TAG));
+		if (tables.size() > 0) {
+			setFlag(true);
+			for (Element table : tables) {
+				String begin = (String) json.get(TABLE_TAG);
+				String end = (String) json.get(TABLE_END_TAG);
+				Elements tbody = table.getElementsByTag(TBODY_TAG);
+				int columns = tbody.first().getElementsByTag(TR_TAG).first().getElementsByTag(TD_TAG).size();
+				dom = dom.replaceFirst(TABLE_TAG, begin + " column=\"" + columns + "\"").replace(TABLE_END_TAG, end);
+	
+				Elements thead = document.getElementsByTag(THEAD_TAG);
+				Elements tfoot = document.getElementsByTag(TFOOT_TAG);
+	
+				ArrayList<Elements> groups = new ArrayList<>();
+				groups.add(tbody.first().getElementsByTag(TR_TAG));
+				if (thead.first() != null) {
+					groups.add(thead.first().getElementsByTag(TR_TAG));
+				}
+				if (tfoot.first() != null) {
+					groups.add(tfoot.first().getElementsByTag(TR_TAG));
+				}
+				dom = fors(groups, LABEL_TAG, LABEL_END_TAG, dom);
 			}
-			if (tfoot.first() != null) {
-				groups.add(tfoot.first().getElementsByTag(TR_TAG));
-			}
-			dom = fors(groups, LABEL_TAG, LABEL_END_TAG, dom);
 		}
 		return cleanDom(dom);
 	}
