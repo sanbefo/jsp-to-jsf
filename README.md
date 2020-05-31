@@ -1,3 +1,4 @@
-# Readme for Thesis Code (Updated 05/20/20)
+# Readme for Thesis Code (Updated 05/31/20)
 ## Instructions to run the code
-To execute the code, you have to use `Eclipse`, and run the `JSFtoJSF.java`, which will parse all the files in the `testFiles` folder and the results will be found in the `transformedFiles` folder and some warning/recommendation notes will be found in the `notesFiles` folder.
+
+To execute the code, you need to step on the folder that has the compiled file (`.class`) with the Command Line and execute the following line `java -cp ".;<PATH_TO_JAVA_LIBRARIES_FOLDER>" JSPtoJSF -f <PATH_TO_JSP_FILE>`. The results will be found in the `transformedFiles` folder and some warning/recommendation notes will be found in the `notesFiles` folder.
