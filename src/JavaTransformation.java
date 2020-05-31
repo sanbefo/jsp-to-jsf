@@ -47,7 +47,7 @@ public class JavaTransformation extends Transformation {
 		int endIndex = tag.lastIndexOf(".");
 		addToStack(ends, "</c:forEach>");
 		String var = tag.substring(beginIndex, endIndex).trim();
-		String jsfTag = "<forEach items=\"#{" + var + "} var=\"" + var + "_elem\">";
+		String jsfTag = "<c:forEach items=\"#{" + var + "}\" var=\"" + var + "_elem\">";
 		return dom.replace(tag, jsfTag).replace(var + ".get(i)", var + "_elem");
 	}
 

@@ -5,25 +5,29 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.io.Reader;
-import java.util.Arrays;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
+//import org.json.simple.parser.ParseException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-
+import org.apache.commons.cli.CommandLine;
+import org.apache.commons.cli.CommandLineParser;
+import org.apache.commons.cli.DefaultParser;
+import org.apache.commons.cli.HelpFormatter;
+import org.apache.commons.cli.Options;
+import org.apache.commons.cli.ParseException;
 public class JSPtoJSF {
 
+	private static CommandLine cmd;
 	private final static String VERTICAL_BAR_FILE = "testFiles/verticalBar.html";
 	private final static String HIDE_MENU_FILE = "testFiles/hideMenu.html";
 	private final static String GOOGLE_SKELETON_FILE = "testFiles/googleSkeleton.html";
 	private final static String BUTTON_BAR_FILE = "testFiles/buttonBar.html";
 	private final static String INDEX_FILE = "testFiles/index.jsp";
 	private final static String CHECKOUT_FILE = "testFiles/checkout.jsp";
-	private final static String BOOK_SHOP_FILE = "testFiles/bookShopHome.jsp";
 	private final static String JSTL_FILE = "testFiles/req_params_jstl.jsp";
-	private final static String JSON_FILE = "dictionary.json";
+	private final static String JSON_FILE = "C:\\Users\\Personal\\eclipse-workspace\\Conversor\\dictionary.json";
 	private final static String TXT_EXTENSION = "txt";
 	private final static String XHTML_EXTENSION = "xhtml";
 	private final static String NOTES_FOLDER = "notesFiles/";
@@ -86,7 +90,7 @@ public class JSPtoJSF {
 		out.println("=====================================================================================================");
 		out.println("Warning notes and recommendations for the file " + filename);
 		out.println("=====================================================================================================");
-		out.println("Check the tabulations and linebreakes for better readability\n");
+		out.println("Check tabulations and linebreakes for better readability\n");
 
 		for (Transformation transformer : transformers) {
 			dom = transformer.transform(document, dom);
@@ -98,14 +102,31 @@ public class JSPtoJSF {
 		return customUpperCase(dom);
 	}
 
-	public static void main(String[] args) throws IOException, ParseException {
-		message("START!!!");
-		JSONParser parser = new JSONParser();
-		try {
-			for (String filename : FILE) {//FILES
+	public static boolean cliFiles(String[] args) {
+		Options options = new Options();
+	    options.addOption("f", true, "Path of file(s) to be transformed");
+
+	    HelpFormatter formatter = new HelpFormatter();
+	    formatter.printHelp("From JSP to JSF", options);
+        CommandLineParser parser = new DefaultParser();
+	      try {
+	          cmd = parser.parse(options, args);
+	      } catch (ParseException e1) {
+	          e1.getMessage();
+	          return false;
+	      }
+	      return true;
+	}
+
+	public static void processFile() throws IOException, org.json.simple.parser.ParseException {
+		if (cmd.hasOption("f")) {
+			File file = new File(cmd.getOptionValue("f"));
+
+			message("START!!!");
+			JSONParser parser = new JSONParser();
+			try {
 				Reader dictionary = new FileReader(JSON_FILE);
 				JSONObject json = (JSONObject) parser.parse(dictionary);
-				File file = new File(filename);
 				String res = domJsoup(json, file);
 				File folder = new File(TRANSFORMATIONS_FOLDER);
 		        folder.mkdirs();
@@ -113,10 +134,19 @@ public class JSPtoJSF {
 				PrintStream out = new PrintStream(name);
 				out.print(res);
 				out.close();
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
 			}
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+			message("DONE!!! ");
 		}
-		message("DONE!!! ");
+	}
+
+	public static void main(String[] args) throws IOException, org.json.simple.parser.ParseException  {
+		cmd = null;
+		if (cliFiles(args)) {
+			processFile();
+		} else {
+			System.out.println("NADA");
+		}
 	}
 }
