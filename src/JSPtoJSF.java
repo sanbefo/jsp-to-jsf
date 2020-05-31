@@ -121,8 +121,9 @@ public class JSPtoJSF {
 	public static void processFile() throws IOException, org.json.simple.parser.ParseException {
 		if (cmd.hasOption("f")) {
 			File file = new File(cmd.getOptionValue("f"));
-
 			message("START!!!");
+			String filename = cmd.getOptionValue("f").substring(cmd.getOptionValue("f").lastIndexOf("\\") + 1, cmd.getOptionValue("f").length());
+			System.out.println("\n The file to be transformed is: " + filename + "\n");
 			JSONParser parser = new JSONParser();
 			try {
 				Reader dictionary = new FileReader(JSON_FILE);
@@ -135,7 +136,7 @@ public class JSPtoJSF {
 				out.print(res);
 				out.close();
 			} catch (FileNotFoundException e) {
-				e.printStackTrace();
+				System.out.println("\n The file seems to be wrong \n");
 			}
 			message("DONE!!! ");
 		}
