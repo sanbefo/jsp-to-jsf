@@ -104,7 +104,9 @@ public class JSPtoJSF {
 
 	public static boolean cliFiles(String[] args) {
 		Options options = new Options();
-	    options.addOption("f", true, "Path of file(s) to be transformed");
+	    options.addOption("f", true, "file path to be transformed");
+	    options.addOption("n", true, "folder path for warning notes");
+	    options.addOption("t", true, "folder path for transfromed file");
 
 	    HelpFormatter formatter = new HelpFormatter();
 	    formatter.printHelp("From JSP to JSF", options);
@@ -123,20 +125,28 @@ public class JSPtoJSF {
 			File file = new File(cmd.getOptionValue("f"));
 			message("START!!!");
 			String filename = cmd.getOptionValue("f").substring(cmd.getOptionValue("f").lastIndexOf("\\") + 1, cmd.getOptionValue("f").length());
+			String notesFolder = NOTES_FOLDER;
+			if (cmd.hasOption("n")) {
+				notesFolder = cmd.getOptionValue("n");
+			}
+			String transformedFolder = TRANSFORMATIONS_FOLDER;
+			if (cmd.hasOption("t")) {
+				transformedFolder = cmd.getOptionValue("t");
+			}
 			System.out.println("\n The file to be transformed is: " + filename + "\n");
 			JSONParser parser = new JSONParser();
 			try {
 				Reader dictionary = new FileReader(JSON_FILE);
 				JSONObject json = (JSONObject) parser.parse(dictionary);
 				String res = domJsoup(json, file);
-				File folder = new File(TRANSFORMATIONS_FOLDER);
+				File folder = new File(transformedFolder);
 		        folder.mkdirs();
-				FileOutputStream name = new FileOutputStream(TRANSFORMATIONS_FOLDER + changeExtension(file, XHTML_EXTENSION));
+				FileOutputStream name = new FileOutputStream(transformedFolder + changeExtension(file, XHTML_EXTENSION));
 				PrintStream out = new PrintStream(name);
 				out.print(res);
 				out.close();
-				System.out.println("\n File will be found in: " + TRANSFORMATIONS_FOLDER + " folder");
-				System.out.println("\n Notes will be found in: " + NOTES_FOLDER + " folder\n");
+				System.out.println("\n File will be found in: " + transformedFolder + " folder");
+				System.out.println("\n Notes will be found in: " + notesFolder + " folder\n");
 			} catch (FileNotFoundException e) {
 				System.out.println("\n The file seems to be wrong \n");
 			}

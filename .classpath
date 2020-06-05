@@ -11,10 +11,8 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry exported="true" kind="lib" path="C:/Users/Personal/Documents/Java Libraries/json.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Personal/Documents/Java Libraries/json-simple.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Personal/Documents/Java Libraries/jsoup-1.13.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Personal/Documents/Java Libraries/jdom-2.0.6.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Personal/Documents/Java Libraries/commons-cli-1.4.jar"/>
 	<classpathentry kind="con" path="org.eclipse.m2e.MAVEN2_CLASSPATH_CONTAINER">
 		<attributes>

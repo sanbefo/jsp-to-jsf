@@ -7,9 +7,6 @@ import org.json.simple.JSONObject;
 import org.jsoup.nodes.Document;
 import java.util.Stack;
 
-//<% %&lt;
-//%&gt; %>
-
 public class JavaTransformation extends Transformation {
 	private JSONObject json;
 	private boolean flag;
