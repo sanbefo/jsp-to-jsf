@@ -135,11 +135,11 @@ public class JSPtoJSF {
 				PrintStream out = new PrintStream(name);
 				out.print(res);
 				out.close();
+				System.out.println("\n File will be found in: " + TRANSFORMATIONS_FOLDER + " folder");
+				System.out.println("\n Notes will be found in: " + NOTES_FOLDER + " folder\n");
 			} catch (FileNotFoundException e) {
 				System.out.println("\n The file seems to be wrong \n");
 			}
-			System.out.println("\n File will be found in: " + TRANSFORMATIONS_FOLDER + " folder");
-			System.out.println("\n Notes will be found in: " + NOTES_FOLDER + " folder\n");
 			message("DONE!!! ");
 		}
 	}
