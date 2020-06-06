@@ -1,5 +1,5 @@
 =====================================================================================================
-Warning notes and recommendations for the file index
+Warning notes and recommendations for the file googleSkeleton
 =====================================================================================================
 Check tabulations and linebreakes for better readability
 
@@ -13,24 +13,9 @@ Check that there are no script tags in the file
 Check that there are no empty attributes in the h:outputScript tag
 Check that both library and name attributes have coherent values
 
--- Radio Tag Notes --
-Check that there are no radio tags in the file
-Check that there are no empty attributes in the f:selectItem tag
-Check there are no <label></label> tags surrounding the f:selectItem tags
-Check the itemValue attribute and the itemLabel value
-
 -- Input Tag Notes --
 Check that there are no input tags in the file
 Check that there are no empty attributes in any of the following tags: h:inputText, h:commandButton, h:selectOneRadio, h:inputSecret, h:inputHidden, h:selectBooleanCheckbox
-
--- Option Tag Notes --
-Check that there are no option tags in the file
-Check that there are no empty attributes in the f:selectItem tag
-
--- A Tag Notes --
-Check that there are no a tags in the file
-Check that there are no empty attributes in the h:outputLink tag
-Check the outcome attribute because it should contain the text in the link
 
 -- Image Tag Notes --
 Check that there are no img tags in the file
@@ -39,8 +24,4 @@ Check that there are no empty attributes in the h:graphicImage tag
 -- Button Tag Notes --
 Check that there are no button tags in the file
 Check that there are no empty attributes in the h:commandButton tag
-
--- Table Tag Notes --
-Check that there are no table, tbody, thead, tfoot, tr or td tags in the file
-Check that there are no empty attributes in the h:panelGrid or f:facet tags
 

@@ -60,10 +60,8 @@ public class JSPtoJSF {
 		return dom;
 	}
 
-	public static String domJsoup(JSONObject json, File file) throws IOException {
+	public static String domJsoup(JSONObject json, File file, String notesFolder) throws IOException {
 		Document document = Jsoup.parse(file, "UTF-8");
-		File folder = new File(NOTES_FOLDER);
-        folder.mkdirs();
 
 		Transformation[] transformers = {
 			new HTMLTransformation(json),
@@ -82,7 +80,7 @@ public class JSPtoJSF {
 		};
 		String dom = document.toString();
 
-		FileOutputStream name = new FileOutputStream(NOTES_FOLDER + changeExtension(file, TXT_EXTENSION));
+		FileOutputStream name = new FileOutputStream(notesFolder + changeExtension(file, TXT_EXTENSION));
 		PrintStream out = new PrintStream(name);
 		int i = file.getName().lastIndexOf('.');
 		String filename = file.getName().substring(0, i);
@@ -102,7 +100,7 @@ public class JSPtoJSF {
 		return customUpperCase(dom);
 	}
 
-	public static boolean cliFiles(String[] args) {
+	public static boolean cli(String[] args) {
 		Options options = new Options();
 	    options.addOption("f", true, "file path to be transformed");
 	    options.addOption("n", true, "folder path for warning notes");
@@ -120,33 +118,39 @@ public class JSPtoJSF {
 	      return true;
 	}
 
+	public static String[] createFolders() {
+		String[] folders = new String[2];
+		String notesFolder = cmd.hasOption("n") ? cmd.getOptionValue("n") : NOTES_FOLDER;
+		notesFolder = notesFolder.endsWith("\\") ? notesFolder : notesFolder + "\\";
+		File folder = new File(notesFolder);
+		folder.mkdirs();
+		String transformedFolder = cmd.hasOption("t") ? cmd.getOptionValue("t") : TRANSFORMATIONS_FOLDER;
+		transformedFolder = transformedFolder.endsWith("\\") ? transformedFolder : transformedFolder + "\\";
+		folder = new File(transformedFolder);
+		folder.mkdirs();
+		folders[0] = notesFolder;
+		folders[1] = transformedFolder;
+		return folders;
+	}
+
 	public static void processFile() throws IOException, org.json.simple.parser.ParseException {
 		if (cmd.hasOption("f")) {
 			File file = new File(cmd.getOptionValue("f"));
 			message("START!!!");
 			String filename = cmd.getOptionValue("f").substring(cmd.getOptionValue("f").lastIndexOf("\\") + 1, cmd.getOptionValue("f").length());
-			String notesFolder = NOTES_FOLDER;
-			if (cmd.hasOption("n")) {
-				notesFolder = cmd.getOptionValue("n");
-			}
-			String transformedFolder = TRANSFORMATIONS_FOLDER;
-			if (cmd.hasOption("t")) {
-				transformedFolder = cmd.getOptionValue("t");
-			}
-			System.out.println("\n The file to be transformed is: " + filename + "\n");
+			System.out.println("\nThe file to be transformed is: " + filename + "\n");
+			String[] folders = createFolders();
 			JSONParser parser = new JSONParser();
 			try {
 				Reader dictionary = new FileReader(JSON_FILE);
 				JSONObject json = (JSONObject) parser.parse(dictionary);
-				String res = domJsoup(json, file);
-				File folder = new File(transformedFolder);
-		        folder.mkdirs();
-				FileOutputStream name = new FileOutputStream(transformedFolder + changeExtension(file, XHTML_EXTENSION));
+				String transformation = domJsoup(json, file, folders[0]);
+				FileOutputStream name = new FileOutputStream(folders[1] + changeExtension(file, XHTML_EXTENSION));
 				PrintStream out = new PrintStream(name);
-				out.print(res);
+				out.print(transformation);
 				out.close();
-				System.out.println("\n File will be found in: " + transformedFolder + " folder");
-				System.out.println("\n Notes will be found in: " + notesFolder + " folder\n");
+				System.out.println("File will be found in: " + folders[1] + " folder");
+				System.out.println("\nNotes will be found in: " + folders[0] + " folder\n");
 			} catch (FileNotFoundException e) {
 				System.out.println("\n The file seems to be wrong \n");
 			}
@@ -154,12 +158,10 @@ public class JSPtoJSF {
 		}
 	}
 
-	public static void main(String[] args) throws IOException, org.json.simple.parser.ParseException  {
+	public static void main(String[] args) throws IOException, org.json.simple.parser.ParseException {
 		cmd = null;
-		if (cliFiles(args)) {
+		if (cli(args)) {
 			processFile();
-		} else {
-			System.out.println("NADA");
 		}
 	}
 }

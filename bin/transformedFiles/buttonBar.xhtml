@@ -1,0 +1,119 @@
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html"> 
+<h:head> <!-- 
+         Normalize.css makes browsers render all elements more consistently and in line with modern standards. It precisely targets only the styles that need normalizing.
+         --> 
+  <h:outputStylesheet library="css" name="normalize.css">
+ <!-- Esto especifica que podamos utilizar acentos dentro del HTML  --> 
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> <!-- Esto especifica que podamos utilizar acentos dentro del HTML  --> 
+  <h:outputStylesheet library="css" name="main.css">
+  <title>Una Página Muy Larga</title> 
+</h:head> 
+<h:body> 
+<h:panelGroup styleClass="container"> 
+<h:header> 
+    <h1>Una Página Muy Larga</h1> 
+</h:header> 
+   <nav> 
+    <ul> 
+     <li styleClass="left"><h:outputLink value="#" outcome="Inicio"></li> 
+     <li styleClass="center"><h:outputLink value="#" outcome="Que Hacemos"></li> 
+     <li styleClass="center"><h:outputLink value="#" outcome="Precios"></li> 
+     <li styleClass="center"><h:outputLink value="#" outcome="Nosotros"></li> 
+     <li styleClass="right"><h:outputLink value="#" outcome="Contacto"></li> 
+    </ul> 
+    <br clear="all"> 
+   </nav> 
+<h:panelGroup styleClass="content"> 
+<h:panelGroup id="buzz"> 
+     <h3>Información Relevante:</h3> 
+     <blockquote>
+       Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+      <br><cite>- Alguien desconocido</cite> 
+     </blockquote> 
+     <blockquote>
+       Incididunt ut labore et dolore magna aliqua. 
+      <br><cite>- El hombre araña</cite> 
+     </blockquote> 
+     <blockquote>
+       Ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit. 
+      <br><cite>- John Doe</cite> 
+     </blockquote>  
+</h:panelGroup> 
+<h:panelGroup id="que_hacemos"> 
+     <h2>Que Hacemos</h2> 
+     <h3>Algunos de nuestros productos son:</h3> 
+<h:panelGroup styleClass="feature"> 
+      <h4>OOO</h4> 
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit</p> 
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit</p> 
+      <h:graphicImage value="https://codealab.files.wordpress.com/2015/06/image_4.jpg"/>
+</h:panelGroup> 
+<h:panelGroup styleClass="feature"> 
+      <h4>UUU</h4> 
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit</p> 
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit</p> 
+      <h:graphicImage value="https://codealab.files.wordpress.com/2015/06/image_2.jpg"/>
+</h:panelGroup> 
+<h:panelGroup styleClass="feature"> 
+      <h4>RRR</h4> 
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit</p> 
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit</p> 
+      <h:graphicImage value="https://codealab.files.wordpress.com/2015/06/image_1.png"/>
+</h:panelGroup> 
+</h:panelGroup> 
+<h:panelGroup id="pricing"> 
+     <h2>Precios</h2> 
+<h:panelGroup styleClass="pricing_features"> 
+      <h5>Básico [$45.56 varos]</h5> 
+      <ul styleClass="pricing_features"> 
+       <li>Algo increíble</li> 
+       <li>Algo más increíble</li> 
+       <li>Algo que te maravillará</li> 
+      </ul> 
+</h:panelGroup> 
+<h:panelGroup styleClass="pricing_features"> 
+      <h5>Pro [$800.34 varos]</h5> 
+      <ul styleClass="pricing_features"> 
+       <li>Algo increíble</li> 
+       <li>Algo más increíble</li> 
+       <li>Algo que te maravillará</li> 
+      </ul> 
+</h:panelGroup> 
+<h:panelGroup styleClass="pricing_features"> 
+      <h5>Platinum [$1000.5 varos]</h5> 
+      <ul> 
+       <li>Algo increíble</li> 
+       <li>Algo más increíble</li> 
+       <li>Algo que te maravillará</li> 
+      </ul> 
+</h:panelGroup> 
+</h:panelGroup> 
+<h:panelGroup id="about"> 
+     <h2>Nosotros</h2> 
+     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit</p> 
+     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit</p> 
+</h:panelGroup> 
+<h:panelGroup id="contact"> 
+     <h2>Contacto</h2> 
+     <h:panelGrid column="2"> 
+<h:outputLabel>Email
+</h:outputLabel> 
+<h:outputLabel>mail@company.com
+</h:outputLabel> 
+<h:outputLabel>Twitter
+</h:outputLabel> 
+<h:outputLabel>@twitter_handle
+</h:outputLabel> 
+<h:outputLabel>Teléfono
+</h:outputLabel> 
+<h:outputLabel>55-0984-0298
+</h:outputLabel> 
+     </h:panelGrid> 
+</h:panelGroup> 
+</h:panelGroup> 
+<h:panelGroup styleClass="footer">
+     Derechos © 2015 Lorem S.A. de C.V 
+</h:panelGroup> 
+</h:panelGroup>  
+</h:body>
+</html>

@@ -1,0 +1,46 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html"> 
+<h:head> 
+  <h:outputStylesheet library="css" name="css/style.css">
+  <title>Google</title> 
+</h:head> 
+<h:body> 
+<h:header> 
+   <ul> 
+    <li>Gmail</li> 
+    <li>Im?genes</li> 
+    <li><h:graphicImage value="img/cuadros.png"/>
+</li> 
+    <li><h:graphicImage value="img/campana.svg"/>
+</li> 
+    <li><h:graphicImage value="img/perfil.jpg"/>
+</li> 
+   </ul> 
+</h:header> 
+  <main> 
+   <section> 
+    <h:graphicImage id="google" value="img/Google.jpg"/>
+   </section> 
+   <section> 
+    <h:inputText id="search" styleClass="field" name="name" autofocus="true" /> 
+    <h:graphicImage width="25" value="img/google-microfono.jpg"/>
+   </section> 
+   <section> <h:commandButton onclick="redirect()" value="Buscar en Google" />
+ <h:commandButton value="Me siento con suerte" />
+   </section> 
+  </main> 
+  <footer> 
+   <ul> 
+    <li>Publicidad</li> 
+    <li>Negocios</li> 
+    <li>Acerca de</li> 
+   </ul> 
+   <ul> 
+    <li>Privacidad</li> 
+    <li>Condiciones</li> 
+    <li>Preferencias</li> 
+    <li>Utilizar Google.com</li> 
+   </ul> 
+  </footer> 
+  <h:outputScript library="js" name="" />  
+</h:body>
+</html>

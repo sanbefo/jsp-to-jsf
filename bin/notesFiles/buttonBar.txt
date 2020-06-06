@@ -1,0 +1,23 @@
+=====================================================================================================
+Warning notes and recommendations for the file buttonBar
+=====================================================================================================
+Check tabulations and linebreakes for better readability
+
+-- Link Tag Notes --
+Check that there are no link tags in the file
+Check that there are no empty attributes in the h:outputStylesheet tag
+Check that both library and name attributes have coherent values
+
+-- A Tag Notes --
+Check that there are no a tags in the file
+Check that there are no empty attributes in the h:outputLink tag
+Check the outcome attribute because it should contain the text in the link
+
+-- Image Tag Notes --
+Check that there are no img tags in the file
+Check that there are no empty attributes in the h:graphicImage tag
+
+-- Table Tag Notes --
+Check that there are no table, tbody, thead, tfoot, tr or td tags in the file
+Check that there are no empty attributes in the h:panelGrid or f:facet tags
+
