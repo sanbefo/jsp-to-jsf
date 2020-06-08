@@ -102,9 +102,9 @@ public class JSPtoJSF {
 
 	public static boolean cli(String[] args) {
 		Options options = new Options();
-	    options.addOption("f", true, "file path to be transformed");
-	    options.addOption("n", true, "folder path for warning notes");
-	    options.addOption("t", true, "folder path for transfromed file");
+	    options.addOption("f", true, "File path to be transformed");
+	    options.addOption("n", true, "Folder path for warning notes");
+	    options.addOption("t", true, "Folder path for transfromed file");
 
 	    HelpFormatter formatter = new HelpFormatter();
 	    formatter.printHelp("From JSP to JSF", options);
@@ -121,11 +121,11 @@ public class JSPtoJSF {
 	public static String[] createFolders() {
 		String[] folders = new String[2];
 		String notesFolder = cmd.hasOption("n") ? cmd.getOptionValue("n") : NOTES_FOLDER;
-		notesFolder = notesFolder.endsWith("\\") ? notesFolder : notesFolder + "\\";
+		notesFolder = notesFolder.endsWith("/") ? notesFolder : notesFolder + "/";
 		File folder = new File(notesFolder);
 		folder.mkdirs();
 		String transformedFolder = cmd.hasOption("t") ? cmd.getOptionValue("t") : TRANSFORMATIONS_FOLDER;
-		transformedFolder = transformedFolder.endsWith("\\") ? transformedFolder : transformedFolder + "\\";
+		transformedFolder = transformedFolder.endsWith("/") ? transformedFolder : transformedFolder + "/";
 		folder = new File(transformedFolder);
 		folder.mkdirs();
 		folders[0] = notesFolder;
