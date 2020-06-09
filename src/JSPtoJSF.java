@@ -152,7 +152,7 @@ public class JSPtoJSF {
 				System.out.println("File will be found in: " + folders[1] + " folder");
 				System.out.println("\nNotes will be found in: " + folders[0] + " folder\n");
 			} catch (FileNotFoundException e) {
-				System.out.println("\nThe file seems to be wrong \n");
+				System.out.println("The file seems to be wrong \n");
 			}
 			message("DONE!!! ");
 		}
